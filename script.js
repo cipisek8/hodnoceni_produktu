@@ -32,7 +32,13 @@ aside
     zmeni komentare podle produktu
     ulozeni like, zmena like
 */
+
+
 totalHappiness();
+addStarEvents();
+updatePercents();
+
+
 
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
@@ -97,3 +103,26 @@ function totalHappiness() {
     }
 }
 
+function addStarEvents(){
+    for (let star of document.querySelectorAll(".stars_product img")){
+        star.addEventListener("click",changeStarClick);
+        star.addEventListener("mouseleave",changeStarOut);
+        star.addEventListener("mouseenter",changeStarOver);
+    }
+}
+
+function updatePercents(){
+
+}
+
+function changeStarOver(){
+
+}
+
+function changeStarOut(){
+
+}
+
+function changeStarClick(){
+console.log();
+}
