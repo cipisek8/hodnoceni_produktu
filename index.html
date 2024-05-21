@@ -18,8 +18,14 @@
             </div>
 
             <div id="product_happiness"> <!-- spokojenost produktu -->
-                <img src="img/Zenith.webp" id="rating_img">
-                <img src="img/stars_full.png">
+                <img src="img/Night's_Edge.webp" class="rating_img">
+                <div class="stars">
+                    <img src="img/Full_Star.webp">
+                    <img src="img/Full_Star.webp">
+                    <img src="img/Empty_Star.webp">
+                    <img src="img/Empty_Star.webp">
+                    <img src="img/Empty_Star.webp">
+                </div>
                 <p>Moje celková spokojenost: 100%</p>
             </div>
         </section>
@@ -44,8 +50,14 @@
                     </div>
 
                     <div class="stars_product">
-                        <img src="img/stars_full.png">
-                        <h3>50%</h3>
+                        <div class="stars">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                        </div>
+                        <h3>100%</h3>
                     </div>
                 </div>
 
@@ -60,7 +72,7 @@
                     <img src="img/Ice_Rod.webp" class="product_img">
 
                     <div class="product_info">
-                        <h2>Dirt rod</h2>
+                        <h2>Ice rod</h2>
                         <p>Číslo produktu: 496</p>
                         <button>Přidat hodnocení</button>
                         <button>Smazat</button>
@@ -68,8 +80,44 @@
                     </div>
 
                     <div class="stars_product">
-                        <img src="img/stars_full.png">
-                        <h3>50%</h3>
+                        <div class="stars">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                        </div>
+                        <h3>100%</h3>
+                    </div>
+                </div>
+
+                <!-- <div class="add_review">
+                    <textarea placeholder="Hodnocení produktu..." class="write_review"></textarea>
+                    <button class="submit_review">Odeslat</button>
+                </div> -->
+            </div>
+
+            <div class="product"> <!-- produkt -->
+                <div class="product_my_review">
+                    <img src="img/Rod_of_Discord.webp" class="product_img">
+
+                    <div class="product_info">
+                        <h2>Rod of Discord</h2>
+                        <p>Číslo produktu: 1326</p>
+                        <button>Přidat hodnocení</button>
+                        <button>Smazat</button>
+                        <button>Zobrazit recenze</button>
+                    </div>
+
+                    <div class="stars_product">
+                        <div class="stars">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                            <img src="img/Full_Star.webp">
+                        </div>
+                        <h3>100%</h3>
                     </div>
                 </div>
 
@@ -82,15 +130,38 @@
 
         <button id="load_more">Načíst další</button> <!-- tlacitko nacist dalsi -->
     </main>
-    
-    <aside> <!-- aside temporary, hodnoceni uzitavelu -->
-        <section> <!-- produkt -->
 
+
+
+    <aside>
+        <h1>Hodnocení uživatelů</h1> <!-- hodnoceni uzitavelu -->
+        <section id="product_info_reviews"> <!-- produkt -->
+            <img src="img/Zenith.webp" class="rating_img">
+            <div class="stars">
+                <img src="img/Full_Star.webp">
+                <img src="img/Full_Star.webp">
+                <img src="img/Full_Star.webp">
+                <img src="img/Full_Star.webp">
+                <img src="img/Full_Star.webp">
+            </div>
+            <p>100%</p>
         </section>
 
-        <section> <!-- recenze (mnozne) -->
-            <div> <!-- recenze (jednotne) -->
+        <section id="review_container"> <!-- recenze (mnozne) -->
+            <div class="review"> <!-- recenze (jednotne) -->
+                <img class="user_icon" src="img/Map_Icon_Moon_Lord.webp">
+                <p class="user_name">Moon lord</p>
+                <p class="user_review_score"><b>100%</b></p>
+                <p class="user_review">Best dirt moving tool!</p>
+                <img src="img/Life_Crystal_Full.webp" class="heart">
+            </div>
 
+            <div class="review"> <!-- recenze (jednotne) -->
+                <img class="user_icon" src="img/Map_Icon_Eye_of_Cthulhu.webp">
+                <p class="user_name">Eye of Cthulhu</p>
+                <p class="user_review_score"><b>0%</b></p>
+                <p class="user_review">Nejhorší věc, co jsem kdy viděl. Co na tom ostatní mají???</p>
+                <img src="img/Life_Crystal_Empty.webp" class="heart">
             </div>
         </section>
     </aside>
