@@ -65,7 +65,7 @@ button {
 }
 
 .stars>img {
-    width: max-content;
+    width: 15%;
 }
 
 .product_img {
@@ -107,6 +107,9 @@ aside {
     height: 100vh;
     background-color: white;
     padding: 10px;
+    visibility: hidden;
+    overflow-y: scroll;
+    margin-bottom: 10vh;
 }
 
 #product_info_reviews {

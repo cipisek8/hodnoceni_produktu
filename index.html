@@ -14,7 +14,7 @@
             <div> <!-- text -->
                 <h1>Hodnocení zakoupených produktů</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <button id="send_all_reviews">Odeslat moje hodnocení</button>
+                <button id="send_all_reviews" onclick="totalHappiness()">Odeslat moje hodnocení</button>
             </div>
 
             <div id="product_happiness"> <!-- spokojenost produktu -->
@@ -26,7 +26,7 @@
                     <img src="img/Empty_Star.webp">
                     <img src="img/Empty_Star.webp">
                 </div>
-                <p>Moje celková spokojenost: 100%</p>
+                <p>Moje celková spokojenost: <b id="total_percent">20</b><b>%</b></p>
             </div>
         </section>
 
@@ -57,7 +57,7 @@
                             <img src="img/Full_Star.webp">
                             <img src="img/Full_Star.webp">
                         </div>
-                        <h3>100%</h3>
+                        <h3><b class="object_percent">100</b><b>%</b></h3>
                     </div>
                 </div>
 
@@ -83,11 +83,11 @@
                         <div class="stars">
                             <img src="img/Full_Star.webp">
                             <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
+                            <img src="img/Empty_Star.webp">
+                            <img src="img/Empty_Star.webp">
+                            <img src="img/Empty_Star.webp">
                         </div>
-                        <h3>100%</h3>
+                        <h3><b class="object_percent">50</b><b>%</b></h3>
                     </div>
                 </div>
 
@@ -112,12 +112,12 @@
                     <div class="stars_product">
                         <div class="stars">
                             <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
-                            <img src="img/Full_Star.webp">
+                            <img src="img/Empty_Star.webp">
+                            <img src="img/Empty_Star.webp">
+                            <img src="img/Empty_Star.webp">
+                            <img src="img/Empty_Star.webp">
                         </div>
-                        <h3>100%</h3>
+                        <h3><b class="object_percent">20</b><b>%</b></h3>
                     </div>
                 </div>
 
@@ -160,11 +160,11 @@
                 <img class="user_icon" src="img/Map_Icon_Eye_of_Cthulhu.webp">
                 <p class="user_name">Eye of Cthulhu</p>
                 <p class="user_review_score"><b>0%</b></p>
-                <p class="user_review">Nejhorší věc, co jsem kdy viděl. Co na tom ostatní mají???</p>
+                <p class="user_review">Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???</p>
                 <img src="img/Life_Crystal_Empty.webp" class="heart">
             </div>
         </section>
     </aside>
 </body>
-
+<script src="script.js"></script>
 </html>
