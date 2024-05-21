@@ -10,61 +10,84 @@
 
 <body>
     <main> <!-- moje hodnoceni -->
-        <section id="celkova_spokojenost"> <!-- celkove hodnoceni, odeslat hodnoeni -->
+        <section id="total_happiness"> <!-- celkove hodnoceni, odeslat hodnoeni -->
             <div> <!-- text -->
                 <h1>Hodnocení zakoupených produktů</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <button id="odeslat_vse_hodnoceni">Odeslat moje hodnocení</button>
+                <button id="send_all_reviews">Odeslat moje hodnocení</button>
             </div>
 
-            <div id="spokojenost_produktu"> <!-- spokojenost produktu -->
+            <div id="product_happiness"> <!-- spokojenost produktu -->
                 <img src="img/Zenith.webp" id="rating_img">
-                <div class="stars">
-                    <img src="img/Full_Star.webp">
-                    <img src="img/Full_Star.webp">
-                    <img src="img/Full_Star.webp">
-                    <img src="img/Full_Star.webp">
-                    <img src="img/Full_Star.webp">
-                </div>
+                <img src="img/stars_full.png">
                 <p>Moje celková spokojenost: 100%</p>
             </div>
         </section>
-        <section id="sort_tlacitka"> <!-- tlacitka seradit -->
+
+        <section id="sort_buttons"> <!-- tlacitka seradit -->
             <p>Seřadit:</p>
-            <button id="sort_sestupne">Od nejlépe hodnocených</button>
-            <button id="sort_vzestupne">Od nejhůře hodnocených</button>
+            <button id="sort_ascending">Od nejlépe hodnocených</button>
+            <button id="sort_descending">Od nejhůře hodnocených</button>
         </section>
-        <section id="produkt_container"> <!-- container na produkty -->
-            <div class="produkt"> <!-- produkt -->
-                <div class="produkt_moje_hodnoceni">
-                    <img src="img/Dirt_Rod.webp">
-                    <div class="">
+
+        <section id="product_container"> <!-- container na produkty -->
+            <div class="product"> <!-- produkt -->
+                <div class="product_my_review">
+                    <img src="img/Dirt_Rod.webp" class="product_img">
+
+                    <div class="product_info">
                         <h2>Dirt rod</h2>
                         <p>Číslo produktu: 114</p>
                         <button>Přidat hodnocení</button>
                         <button>Smazat</button>
                         <button>Zobrazit recenze</button>
                     </div>
-                    <div class="stars">
-                        <img src="img/Full_Star.webp">
-                        <img src="img/Full_Star.webp">
-                        <img src="img/Full_Star.webp">
-                        <img src="img/Full_Star.webp">
-                        <img src="img/Full_Star.webp">
-                        <p>50%</p>
+
+                    <div class="stars_product">
+                        <img src="img/stars_full.png">
+                        <h3>50%</h3>
                     </div>
                 </div>
-                <div class="pridat_hodnoceni">
 
+                <div class="add_review">
+                    <textarea placeholder="Hodnocení produktu..." class="write_review"></textarea>
+                    <button class="submit_review">Odeslat</button>
                 </div>
             </div>
+
+            <div class="product"> <!-- produkt -->
+                <div class="product_my_review">
+                    <img src="img/Ice_Rod.webp" class="product_img">
+
+                    <div class="product_info">
+                        <h2>Dirt rod</h2>
+                        <p>Číslo produktu: 496</p>
+                        <button>Přidat hodnocení</button>
+                        <button>Smazat</button>
+                        <button>Zobrazit recenze</button>
+                    </div>
+
+                    <div class="stars_product">
+                        <img src="img/stars_full.png">
+                        <h3>50%</h3>
+                    </div>
+                </div>
+
+                <!-- <div class="add_review">
+                    <textarea placeholder="Hodnocení produktu..." class="write_review"></textarea>
+                    <button class="submit_review">Odeslat</button>
+                </div> -->
+            </div>
         </section>
-        <!-- tlacitko nacist dalsi -->
+
+        <button id="load_more">Načíst další</button> <!-- tlacitko nacist dalsi -->
     </main>
+    
     <aside> <!-- aside temporary, hodnoceni uzitavelu -->
         <section> <!-- produkt -->
 
         </section>
+
         <section> <!-- recenze (mnozne) -->
             <div> <!-- recenze (jednotne) -->
 

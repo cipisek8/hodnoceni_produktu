@@ -1,19 +1,19 @@
-body{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-main{
+main {
     width: 50vw;
     margin-left: auto;
     margin-right: auto;
 }
 
-#celkova_spokojenost{
+#total_happiness {
     display: grid;
     grid-template-columns: auto auto;
 }
 
-#spokojenost_produktu{
+#product_happiness {
     border: solid 2px darkgray;
     border-radius: 10px;
     padding: 5px;
@@ -22,30 +22,24 @@ main{
     align-items: center;
 }
 
-#rating_img{
+#rating_img {
     width: 30%;
     padding: 10%;
 }
 
-#sort_tlacitka{
-   display: grid;
-   grid-template-columns: 30% 30% 30%;
-   justify-content: end;
-   margin-top: 10px
+#sort_buttons {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    justify-content: end;
+    margin-top: 10px
 }
 
-#sort_tlacitka > p{
+#sort_buttons>p {
     text-align: right;
     margin-right: 5px;
 }
 
-.stars{
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-
-button{
+button {
     background-color: #28a1e1;
     border: 5px solid #28a1e1;
     border-radius: 10px;
@@ -53,7 +47,46 @@ button{
     margin: 5px
 }
 
-.produkt_moje_hodnoceni{
+.product_my_review {
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 20% 40% 30%;
+    gap: 5%;
+}
+
+.stars_product {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.product_img {
+    width: 100%;
+    max-height: 100%;
+    place-self: center;
+}
+
+.product{
+    border: solid 2px darkgray;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.add_review{
+    padding: 10px;
+}
+
+.write_review{
+    width: 100%;
+    resize: vertical;
+    border-color: #28a1e1;
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+#load_more{
+    margin-left: 40%;
+    margin-right: 40%;
+    width:20%;
 }
