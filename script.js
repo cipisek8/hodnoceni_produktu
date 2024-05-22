@@ -11,7 +11,7 @@ celkove hodnoceni
     casti hvezd ****
 
 zaridici tlacitka
-    seradi produkty podle hodnoceni
+    seradi produkty podle hodnoceni ----------------------------------------------------------------
 
 produkt
     hvezdy
@@ -36,7 +36,6 @@ aside
 
 totalHappiness();
 addStarEvents();
-
 
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
@@ -131,16 +130,47 @@ function changeStarOut() {
 
 function changeStarClick() {
     let percent = 0;
-    for (let star of this.parentElement.children){
-        if(star.src.includes("Full_Star.webp"))
+    for (let star of this.parentElement.children) {
+        if (star.src.includes("Full_Star.webp"))
             percent += 20;
     }
     this.parentElement.parentElement.children[1].children[0].innerText = percent;
 }
 
+function sortProductsAscending() {
+    let productContainer = document.querySelector("#product_container");
+    let products = productContainer.children;
+    let highestItem = [-1, -1] //[index, value]
+    for (let i = 0; i < products.length; i++) {
+        highestItem = [-1, -1];
+        for (let y = 0; y < (products.length - i); y++) {
+            let productPercent = parseInt(products[y].children[0].children[2].children[1].children[0].innerText);
+            if (productPercent >= highestItem[1]) {
+                highestItem = [y,productPercent];
+            }
+        }
+        productContainer.appendChild(products[highestItem[0]]);
+    }
+}
+
+function sortProductsDescending() {
+    let productContainer = document.querySelector("#product_container");
+    let products = productContainer.children;
+    let lowestItem = [-1, 101] //[index, value]
+    for (let i = 0; i < products.length; i++) {
+        lowestItem = [-1, 101];
+        for (let y = 0; y < (products.length - i); y++) {
+            let productPercent = parseInt(products[y].children[0].children[2].children[1].children[0].innerText);
+            if (productPercent <= lowestItem[1]) {
+                lowestItem = [y,productPercent];
+            }
+        }
+        productContainer.appendChild(products[lowestItem[0]]);
+    }
+}
 
 ///////////////////////////////////// pro spolupraci autocomplete
 document.querySelector().parentElement.children.
-parseInt()
+    parseInt()
 "ssseeefggg".includes
 /////////////////////////////////////
