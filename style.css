@@ -44,7 +44,15 @@ button {
     border: 5px solid #28a1e1;
     border-radius: 10px;
     color: white;
-    margin: 5px
+    margin: 5px;
+}
+
+.disabled {
+    background-color: #7dabc5;
+    border: 5px solid #7dabc5; 
+    border-radius: 10px;
+    color: white;
+    margin: 5px;
 }
 
 .product_my_review {

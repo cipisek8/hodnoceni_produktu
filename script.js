@@ -19,12 +19,13 @@ produkt
         vyjeti = zhasnuti --------------------------------------------------------------------------
         click = locknuti, dokud zase neprejedu -----------------------------------------------------
     tlacitka
-        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi --------------------------
+        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi ----------------------------
+            hodnoceni bude v u ostatnich komentaru
         smazat - smaze produkt ---------------------------------------------------------------------
         zobrazit recenze - otevre <aside>
 
 nacist dalsi
-    nacte dalsi produkty
+    nacte dalsi produkty ---------------------------------------------------------------------------
 
 aside
     dat pozadi na zbytek stranky
@@ -33,9 +34,18 @@ aside
     ulozeni like, zmena like
 */
 
-
-totalHappiness();
+const productList = [
+    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114 },
+    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496 },
+    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326 },
+    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495 },
+    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362 },
+    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256 },
+    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244 }
+]
 addEvents();
+addProducts();
+totalHappiness();
 
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
@@ -112,6 +122,16 @@ function addEvents() {
 
     for (let button of document.querySelectorAll(".add_review_button"))
         button.addEventListener("click", addReview);
+
+    let loadMoreButton = document.querySelector("#load_more");
+    if (productList.length == document.querySelectorAll(".product").length) {
+        loadMoreButton.removeEventListener("click", addProducts);
+        loadMoreButton.classList.toggle("disabled", true);
+    }
+    else {
+        loadMoreButton.addEventListener("click", addProducts);
+        loadMoreButton.classList.toggle("disabled", false);
+    }
 }
 
 function changeStarOver() {
@@ -177,6 +197,7 @@ function sortProductsDescending() {
 
 function deleteProduct() {
     this.parentElement.parentElement.parentElement.remove();
+    addEvents();
 }
 
 function addReview() {
@@ -204,12 +225,81 @@ function addReview() {
 
 function submitReview() {
     let productId = this.parentElement.parentElement.children[0].children[1].children[1].innerText.slice(16);
-    window.localStorage.setItem(`review_product_${productId}`, this.parentElement.children[0].value);
+    window.localStorage.setItem(`review_product_text_${productId}`, this.parentElement.children[0].value);
+    window.localStorage.setItem(`review_product_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
     this.parentElement.remove();
 }
 
-///////////////////////////////////// pro spolupraci autocomplete
-document.querySelector().parentElement.children.
+function addProduct(index) {
+    let product = document.createElement("div");
+    product.classList.add("product");
+    product.classList.add(index);
+    document.querySelector("#product_container").appendChild(product);
+
+    {
+        let productReview = document.createElement("div");
+        productReview.classList.add("product_my_review");
+        product.appendChild(productReview);
+
+        {
+            let productImg = document.createElement("img");
+            productImg.src = `img/${productList[index].imgSrc}`;
+            productImg.classList.add("product_img");
+            productReview.appendChild(productImg);
+
+            let productInfo = document.createElement("div");
+            productInfo.classList.add("product_info");
+            productReview.append(productInfo);
+
+            {
+                productInfo.innerHTML = `<h2>${productList[index].name}</h2>
+                <p class="product_id">Číslo produktu: ${productList[index].id}</p>
+                <button class="add_review_button">Přidat hodnocení</button>
+                <button class="delete_item">Smazat</button>
+                <button>Zobrazit recenze</button>`;
+            }
+
+            let starsProduct = document.createElement("div");
+            starsProduct.classList.add("stars_product");
+            productReview.append(starsProduct);
+
+            {
+                starsProduct.innerHTML = `<div class="stars 1">
+                    <img src="img/Full_Star.webp" class="1">
+                    <img src="img/Full_Star.webp" class="2">
+                    <img src="img/Full_Star.webp" class="3">
+                    <img src="img/Full_Star.webp" class="4">
+                    <img src="img/Full_Star.webp" class="5">
+                </div>
+                <h3><b class="object_percent 1">100</b><b>%</b></h3>`
+            }
+        }
+    }
+    addEvents();
+}
+
+function addProducts() {
+    let activeProductsIDs = [];
+    let activeProducts = document.querySelectorAll(".product");
+
+    for (let i = 0; i < activeProducts.length; i++) {
+        activeProductsIDs[i] = parseInt(activeProducts[i].classList[1]);
+    }
+
+    let amountDone = 0;
+
+    for (let i = 0; i < productList.length; i++) {
+        if (amountDone == 3)
+            return;
+        if (!activeProductsIDs.includes(i)) {
+            addProduct(i);
+            amountDone++;
+        }
+    }
+    addEvents();
+}
+///////////////////////////////////// pro spolupraci autocomplete/copy paste garage
+document.querySelector().classList.
     parseInt()
 "ssseeefggg".includes
 this.parentElement.parentElement.parentElement;
