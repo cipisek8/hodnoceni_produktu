@@ -15,9 +15,9 @@ zaridici tlacitka
 
 produkt
     hvezdy
-        prejizdeni = rozsviceni
-        vyjeti = zhasnuti
-        click = locknuti, dokud zase neprejedu
+        prejizdeni = rozsviceni --------------------------------------------------------------------
+        vyjeti = zhasnuti --------------------------------------------------------------------------
+        click = locknuti, dokud zase neprejedu -----------------------------------------------------
     tlacitka
         pridat hodnoceni - prida .class_review, po tlacitku Odeslat zmizi
         smazat - smaze produkt
@@ -36,8 +36,6 @@ aside
 
 totalHappiness();
 addStarEvents();
-updatePercents();
-
 
 
 function totalHappiness() {
@@ -103,26 +101,46 @@ function totalHappiness() {
     }
 }
 
-function addStarEvents(){
-    for (let star of document.querySelectorAll(".stars_product img")){
-        star.addEventListener("click",changeStarClick);
-        star.addEventListener("mouseleave",changeStarOut);
-        star.addEventListener("mouseenter",changeStarOver);
+function addStarEvents() {
+    for (let star of document.querySelectorAll(".stars_product img")) {
+        star.addEventListener("click", changeStarClick);
+        star.addEventListener("mouseleave", changeStarOut);
+        star.addEventListener("mouseenter", changeStarOver);
     }
 }
 
-function updatePercents(){
-
+function changeStarOver() {
+    let stars = this.parentElement.children;
+    for (let star of stars) {
+        star.src = "img/Empty_Star.webp";
+    }
+    for (let i = 0; i < this.classList[0]; i++) {
+        stars[i].src = "img/Full_Star.webp";
+    }
 }
 
-function changeStarOver(){
-
+function changeStarOut() {
+    let stars = this.parentElement.children;
+    for (let star of stars) {
+        star.src = "img/Empty_Star.webp";
+    }
+    for (let i = 0; i < Math.ceil(parseInt(this.parentElement.parentElement.children[1].children[0].innerText) / 20); i++) {
+        stars[i].src = "img/Full_Star.webp";
+    }
 }
 
-function changeStarOut(){
-
+function changeStarClick() {
+    let percent = 0;
+    for (let star of this.parentElement.children){
+        if(star.src.includes("Full_Star.webp"))
+            percent += 20;
+    }
+    this.parentElement.parentElement.children[1].children[0].innerText = percent;
 }
 
-function changeStarClick(){
-console.log();
-}
+
+///////////////////////////////////// pro spolupraci autocomplete
+document.querySelector().parentElement.children.
+parseInt()
+"ssseeefggg".includes
+/////////////////////////////////////
