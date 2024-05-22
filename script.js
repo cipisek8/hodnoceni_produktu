@@ -5,7 +5,7 @@
 /////////////// = pracuju prave ted
 
 celkove hodnoceni
-    aktualizace pri zmene hodnoceni /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-
+    aktualizace pri zmene hodnoceni ----------------------------------------------------------------
     zmena obrazku pri specifickych procentech (0-20, 21-40, 41-60, 61-80, 81-100) ------------------
     aktualizace procent ----------------------------------------------------------------------------
     casti hvezd ****
@@ -14,7 +14,7 @@ zaridici tlacitka
     seradi produkty podle hodnoceni ----------------------------------------------------------------
 
 produkt
-    hvezdy
+    hvezdy -----------------------------------------------------------------------------------------
         prejizdeni = rozsviceni --------------------------------------------------------------------
         vyjeti = zhasnuti --------------------------------------------------------------------------
         click = locknuti, dokud zase neprejedu -----------------------------------------------------
@@ -29,23 +29,42 @@ nacist dalsi
 
 aside
     dat pozadi na zbytek stranky
-    zmeni hodnoceni/obrazek podle produktu
+    zmeni hodnoceni/obrazek podle hodnoceni produktu
     zmeni komentare podle produktu
     ulozeni like, zmena like
+    muj komentar nacteny z local storage, bez like
 
+plan aside
+    eventlistener, this (prejeti na product. class cislo)
+    predani do metody otevirani aside
+    kalkulace recenze z komentaru
+        aktualizace obrazku
+    ukladani like do local storage
 
-reforma - zmenit cely kod aby pouzival localstorage
+reforma - zmenit cely kod aby pouzival localstorage ------------------------------------------------
 */
 
 const productList = [
-    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114, rating: window.localStorage.getItem(`review_product_rating_${114}`) },
-    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496, rating: window.localStorage.getItem(`review_product_rating_${496}`) },
-    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326, rating: window.localStorage.getItem(`review_product_rating_${1326}`) },
-    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495, rating: window.localStorage.getItem(`review_product_rating_${495}`) },
-    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362, rating: window.localStorage.getItem(`review_product_rating_${362}`) },
-    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256, rating: window.localStorage.getItem(`review_product_rating_${1256}`) },
-    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244, rating: window.localStorage.getItem(`review_product_rating_${1244}`) }
+    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114, rating: window.localStorage.getItem(`review_product_my_rating_${114}`) },
+    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496, rating: window.localStorage.getItem(`review_product_my_rating_${496}`) },
+    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326, rating: window.localStorage.getItem(`review_product_my_rating_${1326}`) },
+    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495, rating: window.localStorage.getItem(`review_product_my_rating_${495}`) },
+    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362, rating: window.localStorage.getItem(`review_product_my_rating_${362}`) },
+    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256, rating: window.localStorage.getItem(`review_product_my_rating_${1256}`) },
+    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244, rating: window.localStorage.getItem(`review_product_my_rating_${1244}`) }
 ]
+
+const productComments = [
+    [
+        { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${0}`)},
+        { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${1}`)}
+    ],
+    [
+
+    ],
+
+]
+
 addEvents();
 addProducts();
 totalHappiness();
@@ -135,6 +154,9 @@ function addEvents() {
         loadMoreButton.addEventListener("click", addProducts);
         loadMoreButton.classList.toggle("disabled", false);
     }
+
+    for (let button of document.querySelectorAll(".open_reviews"))
+        button.addEventListener("click", openReviews);
 }
 
 function changeStarOver() {
@@ -229,8 +251,8 @@ function addReview() {
 
 function submitReview() {
     let productId = this.parentElement.parentElement.children[0].children[1].children[1].innerText.slice(16);
-    window.localStorage.setItem(`review_product_text_${productId}`, this.parentElement.children[0].value);
-    window.localStorage.setItem(`review_product_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
+    window.localStorage.setItem(`review_product_my_text_${productId}`, this.parentElement.children[0].value);
+    window.localStorage.setItem(`review_product_my_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
     this.parentElement.remove();
 }
 
@@ -260,7 +282,7 @@ function addProduct(index) {
                 <p class="product_id">Číslo produktu: ${productList[index].id}</p>
                 <button class="add_review_button">Přidat hodnocení</button>
                 <button class="delete_item">Smazat</button>
-                <button>Zobrazit recenze</button>`;
+                <button class="open_reviews">Zobrazit recenze</button>`;
             }
 
             let starsProduct = document.createElement("div");
@@ -353,14 +375,19 @@ function addProducts() {
 
 function submitAllRatings() {
     let ratings = document.querySelectorAll(".object_percent");
-    for(let i = 0; i < ratings.length; i++)
-    window.localStorage.setItem(`review_product_rating_${ratings[i].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16)}`, ratings[i].innerText);
+    for (let i = 0; i < ratings.length; i++)
+        window.localStorage.setItem(`review_product_my_rating_${ratings[i].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16)}`, ratings[i].innerText);
 }
+
+function openReviews() {
+document.querySelector("aside").classList.toggle("hidden");
+}
+
 ///////////////////////////////////// pro spolupraci autocomplete/copy paste garage
 document.querySelector().classList.
     parseInt()
 "ssseeefggg".includes
 this.parentElement.parentElement.parentElement;
 ratings[0].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16);
-window.localStorage.setItem(`review_product_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
+window.localStorage.setItem(`review_product_my_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
 /////////////////////////////////////
