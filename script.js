@@ -19,9 +19,9 @@ produkt
         vyjeti = zhasnuti --------------------------------------------------------------------------
         click = locknuti, dokud zase neprejedu -----------------------------------------------------
     tlacitka
-        pridat hodnoceni - prida .class_review, po tlacitku Odeslat zmizi
-        smazat - smaze produkt
-        zobrazit recenze - otevre aside
+        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi --------------------------
+        smazat - smaze produkt ---------------------------------------------------------------------
+        zobrazit recenze - otevre <aside>
 
 nacist dalsi
     nacte dalsi produkty
@@ -35,7 +35,7 @@ aside
 
 
 totalHappiness();
-addStarEvents();
+addEvents();
 
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
@@ -100,12 +100,18 @@ function totalHappiness() {
     }
 }
 
-function addStarEvents() {
+function addEvents() {
     for (let star of document.querySelectorAll(".stars_product img")) {
         star.addEventListener("click", changeStarClick);
         star.addEventListener("mouseleave", changeStarOut);
         star.addEventListener("mouseenter", changeStarOver);
     }
+
+    for (let button of document.querySelectorAll(".delete_item"))
+        button.addEventListener("click", deleteProduct);
+
+    for (let button of document.querySelectorAll(".add_review_button"))
+        button.addEventListener("click", addReview);
 }
 
 function changeStarOver() {
@@ -146,7 +152,7 @@ function sortProductsAscending() {
         for (let y = 0; y < (products.length - i); y++) {
             let productPercent = parseInt(products[y].children[0].children[2].children[1].children[0].innerText);
             if (productPercent >= highestItem[1]) {
-                highestItem = [y,productPercent];
+                highestItem = [y, productPercent];
             }
         }
         productContainer.appendChild(products[highestItem[0]]);
@@ -162,15 +168,49 @@ function sortProductsDescending() {
         for (let y = 0; y < (products.length - i); y++) {
             let productPercent = parseInt(products[y].children[0].children[2].children[1].children[0].innerText);
             if (productPercent <= lowestItem[1]) {
-                lowestItem = [y,productPercent];
+                lowestItem = [y, productPercent];
             }
         }
         productContainer.appendChild(products[lowestItem[0]]);
     }
 }
 
+function deleteProduct() {
+    this.parentElement.parentElement.parentElement.remove();
+}
+
+function addReview() {
+    let product = this.parentElement.parentElement.parentElement;
+    if (product.children.length == 1) {
+        let reviewContainer = document.createElement("div");
+        reviewContainer.classList.add("add_review");
+
+        let textBox = document.createElement("textarea");
+        textBox.placeholder = "Hodnocení produktu...";
+        textBox.classList.add("write_review");
+        reviewContainer.appendChild(textBox);
+
+        let submitButton = document.createElement("button");
+        submitButton.class = "submit_review";
+        submitButton.innerText = "Odeslat";
+        submitButton.addEventListener("click", submitReview)
+        reviewContainer.appendChild(submitButton);
+
+        product.appendChild(reviewContainer);
+    }
+    else
+        product.children[1].remove();
+}
+
+function submitReview() {
+    let productId = this.parentElement.parentElement.children[0].children[1].children[1].innerText.slice(16);
+    window.localStorage.setItem(`review_product_${productId}`, this.parentElement.children[0].value);
+    this.parentElement.remove();
+}
+
 ///////////////////////////////////// pro spolupraci autocomplete
 document.querySelector().parentElement.children.
     parseInt()
 "ssseeefggg".includes
+this.parentElement.parentElement.parentElement;
 /////////////////////////////////////
