@@ -32,16 +32,19 @@ aside
     zmeni hodnoceni/obrazek podle produktu
     zmeni komentare podle produktu
     ulozeni like, zmena like
+
+
+reforma - zmenit cely kod aby pouzival localstorage
 */
 
 const productList = [
-    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114 },
-    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496 },
-    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326 },
-    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495 },
-    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362 },
-    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256 },
-    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244 }
+    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114, rating: window.localStorage.getItem(`review_product_rating_${114}`) },
+    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496, rating: window.localStorage.getItem(`review_product_rating_${496}`) },
+    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326, rating: window.localStorage.getItem(`review_product_rating_${1326}`) },
+    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495, rating: window.localStorage.getItem(`review_product_rating_${495}`) },
+    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362, rating: window.localStorage.getItem(`review_product_rating_${362}`) },
+    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256, rating: window.localStorage.getItem(`review_product_rating_${1256}`) },
+    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244, rating: window.localStorage.getItem(`review_product_rating_${1244}`) }
 ]
 addEvents();
 addProducts();
@@ -161,6 +164,7 @@ function changeStarClick() {
             percent += 20;
     }
     this.parentElement.parentElement.children[1].children[0].innerText = percent;
+    totalHappiness();
 }
 
 function sortProductsAscending() {
@@ -264,6 +268,9 @@ function addProduct(index) {
             productReview.append(starsProduct);
 
             {
+                let rating = productList[index].rating;
+                if (rating == null)
+                    rating = 100;
                 starsProduct.innerHTML = `<div class="stars 1">
                     <img src="img/Full_Star.webp" class="1">
                     <img src="img/Full_Star.webp" class="2">
@@ -271,7 +278,52 @@ function addProduct(index) {
                     <img src="img/Full_Star.webp" class="4">
                     <img src="img/Full_Star.webp" class="5">
                 </div>
-                <h3><b class="object_percent 1">100</b><b>%</b></h3>`
+                <h3><b class="object_percent">${rating}</b><b>%</b></h3>`
+                let stars = starsProduct.children[0].children;
+
+                switch (Math.ceil(rating / 20)) {
+                    case 5:
+                        for (let star of stars) {
+                            star.src = "img/Full_Star.webp";
+                        }
+                        break;
+
+                    case 4:
+                        for (let star of stars) {
+                            star.src = "img/Empty_Star.webp";
+                        }
+                        for (let i = 0; i < 4; i++) {
+                            stars[i].src = "img/Full_Star.webp";
+                        }
+                        break;
+
+                    case 3:
+                        for (let star of stars) {
+                            star.src = "img/Empty_Star.webp";
+                        }
+                        for (let i = 0; i < 3; i++) {
+                            stars[i].src = "img/Full_Star.webp";
+                        }
+                        break;
+
+                    case 2:
+                        for (let star of stars) {
+                            star.src = "img/Empty_Star.webp";
+                        }
+                        for (let i = 0; i < 2; i++) {
+                            stars[i].src = "img/Full_Star.webp";
+                        }
+                        break;
+
+                    case 1:
+                        for (let star of stars) {
+                            star.src = "img/Empty_Star.webp";
+                        }
+                        for (let i = 0; i < 1; i++) {
+                            stars[i].src = "img/Full_Star.webp";
+                        }
+                        break;
+                }
             }
         }
     }
@@ -298,9 +350,17 @@ function addProducts() {
     }
     addEvents();
 }
+
+function submitAllRatings() {
+    let ratings = document.querySelectorAll(".object_percent");
+    for(let i = 0; i < ratings.length; i++)
+    window.localStorage.setItem(`review_product_rating_${ratings[i].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16)}`, ratings[i].innerText);
+}
 ///////////////////////////////////// pro spolupraci autocomplete/copy paste garage
 document.querySelector().classList.
     parseInt()
 "ssseeefggg".includes
 this.parentElement.parentElement.parentElement;
+ratings[0].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16);
+window.localStorage.setItem(`review_product_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
 /////////////////////////////////////
