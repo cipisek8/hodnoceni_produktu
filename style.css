@@ -72,8 +72,16 @@ button {
     grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
-.stars>img {
+.star { 
     width: 15%;
+}
+
+.star:hover~.star { 
+    content: url("img/Empty_Star.webp");
+}
+
+.star:has(~.star:hover)+.star{
+    content: url("img/Full_Star.webp");
 }
 
 .product_img {
@@ -121,7 +129,7 @@ aside {
 }
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
 
 #product_info_reviews {

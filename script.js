@@ -4,6 +4,9 @@
 /-/-/-/-/-/-/-/ = castecne hotovo
 /////////////// = pracuju prave ted
 
+--------------- = prekopano
+/-/-/-/-/-/-/-/ = prekopu jinak/jindy
+
 celkove hodnoceni
     aktualizace pri zmene hodnoceni ----------------------------------------------------------------
     zmena obrazku pri specifickych procentech (0-20, 21-40, 41-60, 61-80, 81-100) ------------------
@@ -18,7 +21,6 @@ produkt
         prejizdeni = rozsviceni --------------------------------------------------------------------
         vyjeti = zhasnuti --------------------------------------------------------------------------
         click = locknuti, dokud zase neprejedu -----------------------------------------------------
-        hover - pres css - ~ - vsechny za tim //////////////////////////////////////////////////////
     tlacitka
         pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi /-/-/-/-/-/-/-/-/-/-/-/-/-/-
             hodnoceni bude v u ostatnich komentaru
@@ -45,10 +47,14 @@ plan aside
 reforma
     zmenit cely kod aby pouzival localstorage ------------------------------------------------------
         ukladat jako array/json
-    zadny this.parentElemnt.children[0]
-    nepridavat eventy vsemu vzdy
+    zadny this.parentElemnt.children[0] ------------------------------------------------------------
+        kazda tlacitko cislo, podle cisla rodice ---------------------------------------------------
+        quaryselector(.cislo) ----------------------------------------------------------------------
+    nepridavat eventy vsemu vzdy ///////////////////////////////////////////////////////////////////
     hlaska s zadnymy produkty
     sort - existuje metoda
+    hover - pres css - ~ - vsechny za tim ----------------------------------------------------------
+    opravit addProducts/addProduct
 */
 
 const productList = [
@@ -86,8 +92,8 @@ const reviewList = [
     ]
 ]
 
-addEvents();
 addProducts();
+updateLoadMore();
 totalHappiness();
 
 // window.localStorage.setItem(`comment_product_${productList[0].id}_comment_${0}`, true);
@@ -154,20 +160,9 @@ function totalHappiness() {
             break;
     }
 }
+// -------------------------------------------------------------------------------------------------
 
-function addEvents() {
-    for (let star of document.querySelectorAll(".stars_product img")) {
-        star.addEventListener("click", changeStarClick);
-        star.addEventListener("mouseleave", changeStarOut);
-        star.addEventListener("mouseenter", changeStarOver);
-    }
-
-    for (let button of document.querySelectorAll(".delete_item"))
-        button.addEventListener("click", deleteProduct);
-
-    for (let button of document.querySelectorAll(".add_review_button"))
-        button.addEventListener("click", addReview);
-
+function updateLoadMore() {
     let loadMoreButton = document.querySelector("#load_more");
     if (productList.length == document.querySelectorAll(".product").length) {
         loadMoreButton.removeEventListener("click", addProducts);
@@ -177,40 +172,25 @@ function addEvents() {
         loadMoreButton.addEventListener("click", addProducts);
         loadMoreButton.classList.toggle("disabled", false);
     }
-
-    for (let button of document.querySelectorAll(".open_reviews"))
-        button.addEventListener("click", openReviews);
 }
-
-function changeStarOver() {
-    let stars = this.parentElement.children;
-    for (let star of stars) {
-        star.src = "img/Empty_Star.webp";
-    }
-    for (let i = 0; i < this.classList[0]; i++) {
-        stars[i].src = "img/Full_Star.webp";
-    }
-}
-
-function changeStarOut() {
-    let stars = this.parentElement.children;
-    for (let star of stars) {
-        star.src = "img/Empty_Star.webp";
-    }
-    for (let i = 0; i < Math.ceil(parseInt(this.parentElement.parentElement.children[1].children[0].innerText) / 20); i++) {
-        stars[i].src = "img/Full_Star.webp";
-    }
-}
+// -------------------------------------------------------------------------------------------------
 
 function changeStarClick() {
     let percent = 0;
-    for (let star of this.parentElement.children) {
-        if (star.src.includes("Full_Star.webp"))
-            percent += 20;
+    let stars = document.querySelectorAll(`.star.${this.classList[1]}`)
+
+    for (let i = 0; i < stars.length; i++)
+        stars[i].src = "img/Empty_Star.webp";
+
+    for (let i = 0; i < parseInt(this.classList[2].slice(2)) + 1; i++) {
+        stars[i].src = "img/Full_Star.webp";
+        percent += 20;
     }
-    this.parentElement.parentElement.children[1].children[0].innerText = percent;
+
+    document.querySelector(`.object_percent.${this.classList[1]}`).innerText = percent;
     totalHappiness();
 }
+// -------------------------------------------------------------------------------------------------
 
 function sortProductsAscending() {
     let productContainer = document.querySelector("#product_container");
@@ -227,6 +207,7 @@ function sortProductsAscending() {
         productContainer.appendChild(products[highestItem[0]]);
     }
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 function sortProductsDescending() {
     let productContainer = document.querySelector("#product_container");
@@ -243,46 +224,34 @@ function sortProductsDescending() {
         productContainer.appendChild(products[lowestItem[0]]);
     }
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+// const array1 = [1, 30, 4, 21, 100000];
+// array1.sort((a, b) => a - b);
+// console.log(array1);
+// Expected output: Array [1, 4, 21, 30, 1000000]
 
 function deleteProduct() {
-    this.parentElement.parentElement.parentElement.remove();
-    // addEvents();
+    document.querySelector(`.product.${this.classList[1]}`).remove();
+
+    updateLoadMore();
 }
+// -------------------------------------------------------------------------------------------------
 
 function addReview() {
-    let product = this.parentElement.parentElement.parentElement;
-    if (product.children.length == 1) {
-        let reviewContainer = document.createElement("div");
-        reviewContainer.classList.add("add_review");
-
-        let textBox = document.createElement("textarea");
-        textBox.placeholder = "Hodnocení produktu...";
-        textBox.classList.add("write_review");
-        reviewContainer.appendChild(textBox);
-
-        let submitButton = document.createElement("button");
-        submitButton.class = "submit_review";
-        submitButton.innerText = "Odeslat";
-        submitButton.addEventListener("click", submitReview)
-        reviewContainer.appendChild(submitButton);
-
-        product.appendChild(reviewContainer);
-    }
-    else
-        product.children[1].remove();
+    document.querySelector(`.add_review.${this.classList[1]}`).classList.toggle("hidden");
 }
+// -------------------------------------------------------------------------------------------------
 
 function submitReview() {
-    let productId = this.parentElement.parentElement.children[0].children[1].children[1].innerText.slice(16);
-    window.localStorage.setItem(`review_product_my_text_${productId}`, this.parentElement.children[0].value);
-    window.localStorage.setItem(`review_product_my_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
-    this.parentElement.remove();
+    document.querySelector(`.add_review.${this.classList[1]}`).classList.toggle("hidden");
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 function addProduct(index) {
     let product = document.createElement("div");
     product.classList.add("product");
-    product.classList.add(index);
+    product.classList.add(`_${index}`);
     document.querySelector("#product_container").appendChild(product);
 
     {
@@ -303,9 +272,13 @@ function addProduct(index) {
             {
                 productInfo.innerHTML = `<h2>${productList[index].name}</h2>
                 <p class="product_id">Číslo produktu: ${productList[index].id}</p>
-                <button class="add_review_button">Přidat hodnocení</button>
-                <button class="delete_item">Smazat</button>
-                <button class="open_reviews">Zobrazit recenze</button>`;
+                <button class="add_review_button _${index}">Přidat hodnocení</button>
+                <button class="delete_item _${index}">Smazat</button>
+                <button class="open_reviews _${index}">Zobrazit recenze</button>`;
+
+                document.querySelector(`.add_review_button._${index}`).addEventListener("click", addReview);
+                document.querySelector(`.delete_item._${index}`).addEventListener("click", deleteProduct);
+                document.querySelector(`.open_reviews._${index}`).addEventListener("click", openReviews);
             }
 
             let starsProduct = document.createElement("div");
@@ -316,15 +289,19 @@ function addProduct(index) {
                 let rating = productList[index].rating;
                 if (rating == null)
                     rating = 100;
-                starsProduct.innerHTML = `<div class="stars 1">
-                    <img src="img/Full_Star.webp" class="1">
-                    <img src="img/Full_Star.webp" class="2">
-                    <img src="img/Full_Star.webp" class="3">
-                    <img src="img/Full_Star.webp" class="4">
-                    <img src="img/Full_Star.webp" class="5">
+                starsProduct.innerHTML = `<div class="stars _${index}">
+                    <img src="img/Full_Star.webp" class="star _${index} __0">
+                    <img src="img/Full_Star.webp" class="star _${index} __1">
+                    <img src="img/Full_Star.webp" class="star _${index} __2">
+                    <img src="img/Full_Star.webp" class="star _${index} __3">
+                    <img src="img/Full_Star.webp" class="star _${index} __4">
                 </div>
-                <h3><b class="object_percent">${rating}</b><b>%</b></h3>`
-                let stars = starsProduct.children[0].children;
+                <h3><b class="object_percent _${index}">${rating}</b><b>%</b></h3>`
+                let stars = document.querySelectorAll(`.star._${index}`);
+
+                for(let star of stars){
+                    star.addEventListener("click", changeStarClick);
+                }
 
                 switch (Math.ceil(rating / 20)) {
                     case 5:
@@ -372,16 +349,25 @@ function addProduct(index) {
             }
         }
     }
-    addEvents();
+
+    let review = document.createElement("div");
+    review.classList.add("add_review");
+    review.classList.add("hidden");
+    review.classList.add(`_${index}`);
+    review.innerHTML = `<textarea placeholder="Hodnocení produktu..." class="write_review _${index}"></textarea><button class="submit_review _${index}">Odeslat</button>`;
+    product.appendChild(review);
+
+    document.querySelector(`.submit_review._${index}`);
     totalHappiness();
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 function addProducts() {
     let activeProductsIDs = [];
     let activeProducts = document.querySelectorAll(".product");
 
     for (let i = 0; i < activeProducts.length; i++) {
-        activeProductsIDs[i] = parseInt(activeProducts[i].classList[1]);
+        activeProductsIDs[i] = parseInt(activeProducts[i].classList[1].slice(1));
     }
 
     let amountDone = 0;
@@ -396,12 +382,14 @@ function addProducts() {
     }
     addEvents();
 }
+// -------------------------------------------------------------------------------------------------
 
 function submitAllRatings() {
     let ratings = document.querySelectorAll(".object_percent");
     for (let i = 0; i < ratings.length; i++)
         window.localStorage.setItem(`review_product_my_rating_${ratings[i].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16)}`, ratings[i].innerText);
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 function openReviews() {
     let sidebar = document.querySelector("aside");
@@ -437,7 +425,7 @@ function openReviews() {
             total += parseInt(percent.innerText);
         }
         let average = Math.round(total / percents.length);
-        if(total == 0)
+        if (total == 0)
             average = 100;
         document.getElementById("product_total_percent").innerText = average;
 
@@ -494,7 +482,10 @@ function openReviews() {
         }
     }
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
+
+/* <div class="add_review"><textarea placeholder="Hodnocení produktu..." class="write_review"></textarea><button>Odeslat</button></div> */
 
 /*
             <div class="review"> <!-- recenze (jednotne) -->
@@ -511,9 +502,5 @@ function openReviews() {
 document.querySelector().classList.
     parseInt()
 "ssseeefggg".includes
-this.parentElement.parentElement.parentElement;
-ratings[0].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16);
-window.localStorage.setItem(`review_product_my_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
-this.parentElement.parentElement.parentElement.classList[1]
 */
 /////////////////////////////////////
