@@ -18,11 +18,12 @@ produkt
         prejizdeni = rozsviceni --------------------------------------------------------------------
         vyjeti = zhasnuti --------------------------------------------------------------------------
         click = locknuti, dokud zase neprejedu -----------------------------------------------------
+        hover - pres css - ~ - vsechny za tim //////////////////////////////////////////////////////
     tlacitka
-        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi ----------------------------
+        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi /-/-/-/-/-/-/-/-/-/-/-/-/-/-
             hodnoceni bude v u ostatnich komentaru
         smazat - smaze produkt ---------------------------------------------------------------------
-        zobrazit recenze - otevre <aside>
+        zobrazit recenze - otevre <aside> ----------------------------------------------------------
 
 nacist dalsi
     nacte dalsi produkty ---------------------------------------------------------------------------
@@ -41,7 +42,13 @@ plan aside
         aktualizace obrazku
     ukladani like do local storage
 
-reforma - zmenit cely kod aby pouzival localstorage ------------------------------------------------
+reforma
+    zmenit cely kod aby pouzival localstorage ------------------------------------------------------
+        ukladat jako array/json
+    zadny this.parentElemnt.children[0]
+    nepridavat eventy vsemu vzdy
+    hlaska s zadnymy produkty
+    sort - existuje metoda
 */
 
 const productList = [
@@ -54,20 +61,36 @@ const productList = [
     { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244, rating: window.localStorage.getItem(`review_product_my_rating_${1244}`) }
 ]
 
-const productComments = [
+const reviewList = [
     [
-        { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${0}`)},
-        { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${1}`)}
+        { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${0}`) },
+        { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${1}`) }
     ],
     [
 
     ],
+    [
 
+    ],
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ]
 ]
 
 addEvents();
 addProducts();
 totalHappiness();
+
+// window.localStorage.setItem(`comment_product_${productList[0].id}_comment_${0}`, true);
 
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
@@ -80,14 +103,14 @@ function totalHappiness() {
     document.getElementById("total_percent").innerText = average;
 
     let stars = document.querySelectorAll("#product_happiness .stars img");
-    let rating_img = document.querySelector("#product_happiness .rating_img");
+    let ratingImg = document.querySelector("#product_happiness .rating_img");
 
     switch (Math.ceil(average / 20)) {
         case 5:
             for (let star of stars) {
                 star.src = "img/Full_Star.webp";
             }
-            rating_img.src = "img/Zenith.webp";
+            ratingImg.src = "img/Zenith.webp";
             break;
 
         case 4:
@@ -97,7 +120,7 @@ function totalHappiness() {
             for (let i = 0; i < 4; i++) {
                 stars[i].src = "img/Full_Star.webp";
             }
-            rating_img.src = "img/Terra_Blade.webp";
+            ratingImg.src = "img/Terra_Blade.webp";
             break;
 
         case 3:
@@ -107,7 +130,7 @@ function totalHappiness() {
             for (let i = 0; i < 3; i++) {
                 stars[i].src = "img/Full_Star.webp";
             }
-            rating_img.src = "img/True_Excalibur.webp";
+            ratingImg.src = "img/True_Excalibur.webp";
             break;
 
         case 2:
@@ -117,7 +140,7 @@ function totalHappiness() {
             for (let i = 0; i < 2; i++) {
                 stars[i].src = "img/Full_Star.webp";
             }
-            rating_img.src = "img/Night's_Edge.webp";
+            ratingImg.src = "img/Night's_Edge.webp";
             break;
 
         case 1:
@@ -127,7 +150,7 @@ function totalHappiness() {
             for (let i = 0; i < 1; i++) {
                 stars[i].src = "img/Full_Star.webp";
             }
-            rating_img.src = "img/Copper_Shortsword.webp";
+            ratingImg.src = "img/Copper_Shortsword.webp";
             break;
     }
 }
@@ -223,7 +246,7 @@ function sortProductsDescending() {
 
 function deleteProduct() {
     this.parentElement.parentElement.parentElement.remove();
-    addEvents();
+    // addEvents();
 }
 
 function addReview() {
@@ -350,6 +373,7 @@ function addProduct(index) {
         }
     }
     addEvents();
+    totalHappiness();
 }
 
 function addProducts() {
@@ -380,14 +404,116 @@ function submitAllRatings() {
 }
 
 function openReviews() {
-document.querySelector("aside").classList.toggle("hidden");
+    let sidebar = document.querySelector("aside");
+    sidebar.classList.toggle("hidden", false);
+    let index = this.parentElement.parentElement.parentElement.classList[1];
+
+    sidebar.children[2].innerHTML = "";
+
+    for (let i = 0; i < reviewList[index].length; i++) {
+        let review = document.createElement("div");
+        review.classList.add("review");
+        sidebar.children[2].appendChild(review);
+
+        let reviewer = reviewList[index][i];
+        let like = "";
+        if (reviewer.liked == "true")
+            like = "Life_Crystal_Full.webp";
+        else
+            like = "Life_Crystal_Empty.webp";
+
+        review.innerHTML = `<img class="user_icon" src="img/${reviewer.imgSrc}">
+        <p class="user_name">${reviewer.name}</p>
+        <p class="user_review_score"><b class="object_percent_review">${reviewer.rating}</b><b>%</b></p>
+        <p class="user_review">${reviewer.comment}</p>
+        <img src="img/${like}" class="heart">`;
+    }
+
+    //skoro stejny jako totalHappiness(), nechce se mi to menit pro premene jen abych to nemusel 1 zkopirovat
+    {
+        let percents = document.querySelectorAll(".object_percent_review");
+        let total = 0;
+        for (let percent of percents) {
+            total += parseInt(percent.innerText);
+        }
+        let average = Math.round(total / percents.length);
+        if(total == 0)
+            average = 100;
+        document.getElementById("product_total_percent").innerText = average;
+
+        let stars = document.querySelectorAll("#product_info_reviews .stars img");
+        let ratingImg = document.querySelector("#product_info_reviews .rating_img");
+
+        switch (Math.ceil(average / 20)) {
+            case 5:
+                for (let star of stars) {
+                    star.src = "img/Full_Star.webp";
+                }
+                ratingImg.src = "img/Zenith.webp";
+                break;
+
+            case 4:
+                for (let star of stars) {
+                    star.src = "img/Empty_Star.webp";
+                }
+                for (let i = 0; i < 4; i++) {
+                    stars[i].src = "img/Full_Star.webp";
+                }
+                ratingImg.src = "img/Terra_Blade.webp";
+                break;
+
+            case 3:
+                for (let star of stars) {
+                    star.src = "img/Empty_Star.webp";
+                }
+                for (let i = 0; i < 3; i++) {
+                    stars[i].src = "img/Full_Star.webp";
+                }
+                ratingImg.src = "img/True_Excalibur.webp";
+                break;
+
+            case 2:
+                for (let star of stars) {
+                    star.src = "img/Empty_Star.webp";
+                }
+                for (let i = 0; i < 2; i++) {
+                    stars[i].src = "img/Full_Star.webp";
+                }
+                ratingImg.src = "img/Night's_Edge.webp";
+                break;
+
+            case 1:
+                for (let star of stars) {
+                    star.src = "img/Empty_Star.webp";
+                }
+                for (let i = 0; i < 1; i++) {
+                    stars[i].src = "img/Full_Star.webp";
+                }
+                ratingImg.src = "img/Copper_Shortsword.webp";
+                break;
+        }
+    }
 }
 
+
+/*
+            <div class="review"> <!-- recenze (jednotne) -->
+                <img class="user_icon" src="img/Map_Icon_Eye_of_Cthulhu.webp">
+                <p class="user_name">Eye of Cthulhu</p>
+                <p class="user_review_score"><b class="object_percent_review">20</b><b>%</b></p>
+                <p class="user_review">Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???</p>
+                <img src="img/Life_Crystal_Empty.webp" class="heart">
+            </div>
+*/
+
 ///////////////////////////////////// pro spolupraci autocomplete/copy paste garage
+/*
 document.querySelector().classList.
     parseInt()
 "ssseeefggg".includes
 this.parentElement.parentElement.parentElement;
 ratings[0].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16);
 window.localStorage.setItem(`review_product_my_rating_${productId}`, this.parentElement.parentElement.children[0].children[2].children[1].children[0].innerText);
+this.parentElement.parentElement.parentElement.classList[1]
+*/
 /////////////////////////////////////
