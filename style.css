@@ -126,6 +126,7 @@ aside {
     padding-right: 10px;
     visibility: visible;
     overflow-y: scroll;
+    z-index: 100;
 }
 
 .hidden {
@@ -166,4 +167,15 @@ aside {
     border-radius: 50%;
     border: 1px solid #28a1e1;
     width: 100%;
+}
+
+#aside_background{
+    background-color: darkgrey;
+    opacity: 50%;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
 }

@@ -8,43 +8,61 @@
 /-/-/-/-/-/-/-/ = prekopu jinak/jindy
 
 celkove hodnoceni
+{
     aktualizace pri zmene hodnoceni ----------------------------------------------------------------
     zmena obrazku pri specifickych procentech (0-20, 21-40, 41-60, 61-80, 81-100) ------------------
     aktualizace procent ----------------------------------------------------------------------------
     casti hvezd ****
+}
 
-zaridici tlacitka
+zaridici tlacitka ----------------------------------------------------------------------------------
+{
     seradi produkty podle hodnoceni ----------------------------------------------------------------
+}
 
-produkt
+produkt --------------------------------------------------------------------------------------------
+{
     hvezdy -----------------------------------------------------------------------------------------
+    {
         prejizdeni = rozsviceni --------------------------------------------------------------------
         vyjeti = zhasnuti --------------------------------------------------------------------------
         click = locknuti, dokud zase neprejedu -----------------------------------------------------
-    tlacitka
-        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi /-/-/-/-/-/-/-/-/-/-/-/-/-/-
-            hodnoceni bude v u ostatnich komentaru
+    }
+    tlacitka ---------------------------------------------------------------------------------------
+    {
+        pridat hodnoceni - prida .add_review, po tlacitku Odeslat zmizi ----------------------------
+            hodnoceni bude v u ostatnich komentaru -------------------------------------------------
         smazat - smaze produkt ---------------------------------------------------------------------
         zobrazit recenze - otevre <aside> ----------------------------------------------------------
-
-nacist dalsi
+    }
+}
+    
+nacist dalsi ---------------------------------------------------------------------------------------
+{
     nacte dalsi produkty ---------------------------------------------------------------------------
+}
 
-aside
-    dat pozadi na zbytek stranky
-    zmeni hodnoceni/obrazek podle hodnoceni produktu
-    zmeni komentare podle produktu
-    ulozeni like, zmena like
-    muj komentar nacteny z local storage, bez like
+aside ----------------------------------------------------------------------------------------------
+{
+    dat pozadi na zbytek stranky -------------------------------------------------------------------
+    zmeni hodnoceni/obrazek podle hodnoceni produktu -----------------------------------------------
+    zmeni komentare podle produktu -----------------------------------------------------------------
+    ulozeni like, zmena like -----------------------------------------------------------------------
+    muj komentar nacteny z local storage, bez like -------------------------------------------------
+}
+    
+plan aside -----------------------------------------------------------------------------------------
+{
+    eventlistener, this (prejeti na product. class cislo) ------------------------------------------
+    predani do metody otevirani aside --------------------------------------------------------------
+    kalkulace recenze z komentaru ------------------------------------------------------------------
+        aktualizace obrazku ------------------------------------------------------------------------
+    ukladani like do local storage -----------------------------------------------------------------
+}
 
-plan aside
-    eventlistener, this (prejeti na product. class cislo)
-    predani do metody otevirani aside
-    kalkulace recenze z komentaru
-        aktualizace obrazku
-    ukladani like do local storage
 
-reforma
+reforma --------------------------------------------------------------------------------------------
+{
     zmenit cely kod aby pouzival localstorage ------------------------------------------------------
         ukladat jako array/json --------------------------------------------------------------------
     zadny this.parentElemnt.children[0] ------------------------------------------------------------
@@ -56,6 +74,8 @@ reforma
     hover - pres css - ~ - vsechny za tim ----------------------------------------------------------
     opravit addProducts/addProduct -----------------------------------------------------------------
     aktualizace viditelneho ratingu produktu po smazani --------------------------------------------
+}
+
 */
 
 const productList = [
@@ -121,6 +141,9 @@ const reviewList = {
 
 if (window.localStorage.getItem("likes") == null)
     window.localStorage.setItem("likes", "{}");
+
+if (window.localStorage.getItem("myReviews") == null)
+    window.localStorage.setItem("myReviews", "{}");
 
 /*
 testing
@@ -324,9 +347,13 @@ function submitReview() {
     loadedRatings[parseInt(this.classList[1].slice(1))] = document.querySelector(`.object_percent.${this.classList[1]}`).innerText;
     window.localStorage.setItem("myProductRatings", loadedRatings.join(','));
 
+    let myReviews = JSON.parse(window.localStorage.getItem("myReviews"));
+    myReviews[parseInt(this.classList[1].slice(1))] = document.querySelector(`.write_review.${this.classList[1]}`).value;
+    window.localStorage.setItem("myReviews", JSON.stringify(myReviews));
+
     document.querySelector(`.add_review.${this.classList[1]}`).classList.toggle("hidden", true);
 }
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+// -------------------------------------------------------------------------------------------------
 
 function addProduct(index) {
     let product = document.createElement("div");
@@ -480,11 +507,26 @@ function submitAllRatings() {
 function openReviews() {
     let sidebar = document.querySelector("aside");
     sidebar.classList.toggle("hidden", false);
+    document.querySelector("#aside_background").classList.toggle("hidden", false);
     let index = this.classList[1].slice(1);
     let reviewContainer = document.querySelector("#review_container");
     let likes = JSON.parse(window.localStorage.getItem("likes"))[index];
 
     reviewContainer.innerHTML = "";
+
+    if(JSON.parse(window.localStorage.getItem("myReviews"))[index] != undefined)
+    {
+        let review = document.createElement("div");
+        review.classList.add("review");
+        review.classList.add(`_${index}`);
+        reviewContainer.appendChild(review);
+
+        review.innerHTML = `<img class="user_icon" src="img/Terrarian.webp">
+        <p class="user_name">Terrarian</p>
+        <p class="user_review_score"><b class="object_percent_review">${window.localStorage.getItem("myProductRatings").split(',')[index]}</b><b>%</b></p>
+        <p class="user_review">${JSON.parse(window.localStorage.getItem("myReviews"))[index]}</p>`;
+    }
+
     for (let i = 0; i < Object.keys(reviewList[index]).length; i++) {
         let review = document.createElement("div");
         review.classList.add("review");
@@ -496,11 +538,11 @@ function openReviews() {
         let like = "";
         if (likes != undefined) {
             if (likes[i] != true)
-                like = "Life_Crystal_Full.webp";
-            else
                 like = "Life_Crystal_Empty.webp";
+            else
+                like = "Life_Crystal_Full.webp";
         }
-        else{
+        else {
             like = "Life_Crystal_Empty.webp";
         }
 
@@ -580,43 +622,40 @@ function openReviews() {
     for (let heart of document.querySelectorAll(".heart"))
         heart.addEventListener("click", changeLike);
 }
+// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+function closeReviews() {
+    document.querySelector("aside").classList.toggle("hidden", true);
+    document.querySelector("#aside_background").classList.toggle("hidden", true);
+}
+// -------------------------------------------------------------------------------------------------
 
 function changeLike() {
     let likes = JSON.parse(window.localStorage.getItem("likes"));
+    let indexItem = this.classList[1].slice(1);
+    let indexComment = this.classList[2].slice(2);
+    if (likes[indexItem] == undefined)
+        likes[indexItem] = {};
 
     if (this.src.includes("Life_Crystal_Empty.webp")) {
-        this.src = "img/Life_Crystal_Full.webp"; 
+        this.src = "img/Life_Crystal_Full.webp";
 
-        likes[this.classList[1].slice(1)][this.classList[2].slice(2)] = true;
+        likes[indexItem][indexComment] = true;
         window.localStorage.setItem("likes", JSON.stringify(likes));
     }
     else {
         this.src = "img/Life_Crystal_Empty.webp";
 
-        likes[this.classList[1].slice(1)][this.classList[2].slice(2)] = false;
+        likes[indexItem][indexComment] = false;
         window.localStorage.setItem("likes", JSON.stringify(likes));
     }
 }
+// -------------------------------------------------------------------------------------------------
 
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
-
-/* <div class="add_review"><textarea placeholder="Hodnocení produktu..." class="write_review"></textarea><button>Odeslat</button></div> */
-
-/*
-            <div class="review"> <!-- recenze (jednotne) -->
-                <img class="user_icon" src="img/Map_Icon_Eye_of_Cthulhu.webp">
-                <p class="user_name">Eye of Cthulhu</p>
-                <p class="user_review_score"><b class="object_percent_review">20</b><b>%</b></p>
-                <p class="user_review">Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???</p>
-                <img src="img/Life_Crystal_Empty.webp" class="heart">
-            </div>
-*/
-
-///////////////////////////////////// pro spolupraci autocomplete/copy paste garage
+//////////////////////////////////////////////////////////////////////////////////////////////////// pro spolupraci autocomplete/copy paste garage
 /*
 document.querySelector().classList.
     parseInt()
 "ssseeefggg".includes
 */
-/////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
