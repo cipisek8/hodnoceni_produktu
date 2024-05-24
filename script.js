@@ -46,57 +46,129 @@ plan aside
 
 reforma
     zmenit cely kod aby pouzival localstorage ------------------------------------------------------
-        ukladat jako array/json
+        ukladat jako array/json --------------------------------------------------------------------
     zadny this.parentElemnt.children[0] ------------------------------------------------------------
         kazda tlacitko cislo, podle cisla rodice ---------------------------------------------------
         quaryselector(.cislo) ----------------------------------------------------------------------
-    nepridavat eventy vsemu vzdy ///////////////////////////////////////////////////////////////////
-    hlaska s zadnymy produkty
-    sort - existuje metoda
+    nepridavat eventy vsemu vzdy -------------------------------------------------------------------
+    hlaska s zadnymy produkty ----------------------------------------------------------------------
+    sort - existuje metoda -------------------------------------------------------------------------
     hover - pres css - ~ - vsechny za tim ----------------------------------------------------------
-    opravit addProducts/addProduct
+    opravit addProducts/addProduct -----------------------------------------------------------------
+    aktualizace viditelneho ratingu produktu po smazani --------------------------------------------
 */
 
 const productList = [
-    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114, rating: window.localStorage.getItem(`review_product_my_rating_${114}`) },
-    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496, rating: window.localStorage.getItem(`review_product_my_rating_${496}`) },
-    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326, rating: window.localStorage.getItem(`review_product_my_rating_${1326}`) },
-    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495, rating: window.localStorage.getItem(`review_product_my_rating_${495}`) },
-    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362, rating: window.localStorage.getItem(`review_product_my_rating_${362}`) },
-    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256, rating: window.localStorage.getItem(`review_product_my_rating_${1256}`) },
-    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244, rating: window.localStorage.getItem(`review_product_my_rating_${1244}`) }
+    { imgSrc: "Dirt_Rod.webp", name: "Dirt rod", id: 114 },
+    { imgSrc: "Ice_Rod.webp", name: "Ice rod", id: 496 },
+    { imgSrc: "Rod_of_Discord.webp", name: "Rod of Discord", id: 1326 },
+    { imgSrc: "Rainbow_Rod.webp", name: "Rainbow Rod", id: 495 },
+    { imgSrc: "Actuation_Rod.webp", name: "Actuation Rod", id: 362 },
+    { imgSrc: "Crimson_Rod.webp", name: "Crimson Rod", id: 1256 },
+    { imgSrc: "Nimbus_Rod.webp", name: "Nimbus Rod", id: 1244 }
 ]
 
-const reviewList = [
-    [
-        { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${0}`) },
-        { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???", liked: window.localStorage.getItem(`comment_product_${productList[0].id}_comment_${1}`) }
-    ],
-    [
+//backup pri smazani/nespravne delce localStorage
+if ((window.localStorage.getItem("myProductRatings") == null) || (window.localStorage.getItem("myProductRatings").split(',').length != productList.length)) {
+    let myProductRatings = [];
+    for (let i = 0; i < productList.length; i++)
+        myProductRatings[i] = 100;
 
-    ],
-    [
+    window.localStorage.setItem("myProductRatings", myProductRatings.join(','));
+}
 
-    ],
-    [
+const reviewList = {
+    0: {
+        0: { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!" },
+        1: { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???" },
+        2: { imgSrc: "Map_Icon_Golem.webp", name: "Golem", rating: 80, comment: "Helps a lot with building the temple." },
+        3: {
+            imgSrc: "Map_Icon_King_Slime.webp", name: "King Slime", rating: 20, comment: `All around me are familiar faces
+        Worn out places, worn out faces
+        Bright and early for the daily races
+        Going nowhere, going nowhere`},
+        4: { imgSrc: "Map_Icon_Brain_of_Cthulhu.webp", name: "Brain of Cthulhu", rating: 60, comment: "Not my best drop." },
+        5: { imgSrc: "Map_Icon_Mechanic.webp", name: "Mechanic", rating: 100, comment: "An essential tool for everyday use." },
+        6: { imgSrc: "Map_Icon_Plantera_(first_form).webp", name: "Plantera", rating: 60, comment: "What even is this supposed to be?" },
+        7: { imgSrc: "Map_Icon_Plantera_(second_form).webp", name: "Ragetera", rating: 20, comment: "fuck fuck fuck fuck fuck fuck fuck" },
+        8: { imgSrc: "Map_Icon_Empress_of_Light.webp", name: "Empress of Light", rating: 20, comment: "a tool for weapklings" },
+        9: { imgSrc: "Map_Icon_Wall_of_Flesh.webp", name: "Wall of Flesh", rating: 20, comment: "cant use it, too much fire around" }
+    },
+    1: {
+        0: { imgSrc: "Map_Icon_Wall_of_Flesh.webp", name: "Wall of Flesh", rating: 20, comment: "cant use it, too much fire around" }
+    },
+    2: {
+        0: { imgSrc: "Map_Icon_Empress_of_Light.webp", name: "Empress of Light", rating: 20, comment: "a tool for weaklings" }
+    },
+    3: {
+        0: { imgSrc: "Map_Icon_Plantera_(first_form).webp", name: "Plantera", rating: 60, comment: "What even is this supposed to be?" },
+        1: { imgSrc: "Map_Icon_Plantera_(second_form).webp", name: "Ragetera", rating: 20, comment: "fuck fuck fuck fuck fuck fuck fuck" }
+    },
+    4: {
+        0: { imgSrc: "Map_Icon_Mechanic.webp", name: "Mechanic", rating: 100, comment: "An essential tool for everyday use." }
+    },
+    5: {
+        0: { imgSrc: "Map_Icon_Brain_of_Cthulhu.webp", name: "Brain of Cthulhu", rating: 60, comment: "Not my best drop." }
+    },
+    6: {
+        0: {
+            imgSrc: "Map_Icon_King_Slime.webp", name: "King Slime", rating: 20, comment: `All around me are familiar faces
+        Worn out places, worn out faces
+        Bright and early for the daily races
+        Going nowhere, going nowhere`}
+    }
+}
 
-    ],
-    [
+if (window.localStorage.getItem("likes") == null)
+    window.localStorage.setItem("likes", "{}");
 
-    ],
-    [
+/*
+testing
 
-    ],
-    [
-
-    ]
-]
+let defaultLikes = {
+    0: {
+        0: true
+        1: false,
+        2: true,
+        3: true,
+        4: false,
+        5: true,
+        6: false,
+        7: false,
+        8: false,
+        9: false
+    },
+    1: {
+        0: false
+    },
+    2: {
+        0: true
+    },
+    3: {
+        0: false,
+        1: true
+    },
+    4: {
+        0: true
+    },
+    5: {
+        0: false
+    },
+    6: {
+        0: true
+    }
+}
+window.localStorage.setItem("likes", JSON.stringify(defaultLikes));
+*/
 
 addProducts();
 updateLoadMore();
 totalHappiness();
 
-// window.localStorage.setItem(`comment_product_${productList[0].id}_comment_${0}`, true);
+function getRating(index) {
+    return window.localStorage.getItem("myProductRatings").split(',')[index];
+}
+// -------------------------------------------------------------------------------------------------
 
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
@@ -194,46 +266,50 @@ function changeStarClick() {
 
 function sortProductsAscending() {
     let productContainer = document.querySelector("#product_container");
-    let products = productContainer.children;
-    let highestItem = [-1, -1] //[index, value]
-    for (let i = 0; i < products.length; i++) {
-        highestItem = [-1, -1];
-        for (let y = 0; y < (products.length - i); y++) {
-            let productPercent = parseInt(products[y].children[0].children[2].children[1].children[0].innerText);
-            if (productPercent >= highestItem[1]) {
-                highestItem = [y, productPercent];
-            }
-        }
-        productContainer.appendChild(products[highestItem[0]]);
+    let productsArray = Array.from(productContainer.children);
+
+    productsArray.sort((a, b) => {
+        let percentA = parseInt(document.querySelector(`.object_percent.${a.classList[1]}`).innerText);
+        let percentB = parseInt(document.querySelector(`.object_percent.${b.classList[1]}`).innerText);
+
+        if (percentA > percentB)
+            return -1;
+        else if (percentA < percentB)
+            return 1;
+        else
+            return 0;
+    })
+
+    for (let product of productsArray) {
+        productContainer.appendChild(product);
     }
 }
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+// -------------------------------------------------------------------------------------------------
 
 function sortProductsDescending() {
     let productContainer = document.querySelector("#product_container");
-    let products = productContainer.children;
-    let lowestItem = [-1, 101] //[index, value]
-    for (let i = 0; i < products.length; i++) {
-        lowestItem = [-1, 101];
-        for (let y = 0; y < (products.length - i); y++) {
-            let productPercent = parseInt(products[y].children[0].children[2].children[1].children[0].innerText);
-            if (productPercent <= lowestItem[1]) {
-                lowestItem = [y, productPercent];
-            }
-        }
-        productContainer.appendChild(products[lowestItem[0]]);
+    let productsArray = Array.from(productContainer.children);
+
+    productsArray.sort((a, b) => {
+        let percentA = parseInt(document.querySelector(`.object_percent.${a.classList[1]}`).innerText);
+        let percentB = parseInt(document.querySelector(`.object_percent.${b.classList[1]}`).innerText);
+
+        if (percentA < percentB)
+            return -1;
+        else if (percentA > percentB)
+            return 1;
+        else
+            return 0;
+    })
+
+    for (let product of productsArray) {
+        productContainer.appendChild(product);
     }
 }
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
-// const array1 = [1, 30, 4, 21, 100000];
-// array1.sort((a, b) => a - b);
-// console.log(array1);
-// Expected output: Array [1, 4, 21, 30, 1000000]
+// -------------------------------------------------------------------------------------------------
 
 function deleteProduct() {
     document.querySelector(`.product.${this.classList[1]}`).remove();
-
     updateLoadMore();
 }
 // -------------------------------------------------------------------------------------------------
@@ -244,7 +320,11 @@ function addReview() {
 // -------------------------------------------------------------------------------------------------
 
 function submitReview() {
-    document.querySelector(`.add_review.${this.classList[1]}`).classList.toggle("hidden");
+    let loadedRatings = window.localStorage.getItem("myProductRatings").split(',');
+    loadedRatings[parseInt(this.classList[1].slice(1))] = document.querySelector(`.object_percent.${this.classList[1]}`).innerText;
+    window.localStorage.setItem("myProductRatings", loadedRatings.join(','));
+
+    document.querySelector(`.add_review.${this.classList[1]}`).classList.toggle("hidden", true);
 }
 // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
@@ -286,7 +366,7 @@ function addProduct(index) {
             productReview.append(starsProduct);
 
             {
-                let rating = productList[index].rating;
+                let rating = getRating(index);
                 if (rating == null)
                     rating = 100;
                 starsProduct.innerHTML = `<div class="stars _${index}">
@@ -299,7 +379,7 @@ function addProduct(index) {
                 <h3><b class="object_percent _${index}">${rating}</b><b>%</b></h3>`
                 let stars = document.querySelectorAll(`.star._${index}`);
 
-                for(let star of stars){
+                for (let star of stars) {
                     star.addEventListener("click", changeStarClick);
                 }
 
@@ -357,12 +437,16 @@ function addProduct(index) {
     review.innerHTML = `<textarea placeholder="Hodnocení produktu..." class="write_review _${index}"></textarea><button class="submit_review _${index}">Odeslat</button>`;
     product.appendChild(review);
 
-    document.querySelector(`.submit_review._${index}`);
+    document.querySelector(`.submit_review._${index}`).addEventListener("click", submitReview);
     totalHappiness();
 }
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+// -------------------------------------------------------------------------------------------------
 
 function addProducts() {
+    if (!(productList.length > 0)) {
+        document.querySelector("#product_container").innerHTML = `<h1>Žádné produkty nejsou dostupné!</h1>`;
+        return;
+    }
     let activeProductsIDs = [];
     let activeProducts = document.querySelectorAll(".product");
 
@@ -380,41 +464,51 @@ function addProducts() {
             amountDone++;
         }
     }
-    addEvents();
+    updateLoadMore();
 }
 // -------------------------------------------------------------------------------------------------
 
 function submitAllRatings() {
     let ratings = document.querySelectorAll(".object_percent");
+    let loadedRatings = window.localStorage.getItem("myProductRatings").split(',');
     for (let i = 0; i < ratings.length; i++)
-        window.localStorage.setItem(`review_product_my_rating_${ratings[i].parentElement.parentElement.parentElement.children[1].children[1].innerText.slice(16)}`, ratings[i].innerText);
+        loadedRatings[ratings[i].classList[1].slice(1)] = ratings[i].innerText;
+    window.localStorage.setItem("myProductRatings", loadedRatings.join(','));
 }
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+// -------------------------------------------------------------------------------------------------
 
 function openReviews() {
     let sidebar = document.querySelector("aside");
     sidebar.classList.toggle("hidden", false);
-    let index = this.parentElement.parentElement.parentElement.classList[1];
+    let index = this.classList[1].slice(1);
+    let reviewContainer = document.querySelector("#review_container");
+    let likes = JSON.parse(window.localStorage.getItem("likes"))[index];
 
-    sidebar.children[2].innerHTML = "";
-
-    for (let i = 0; i < reviewList[index].length; i++) {
+    reviewContainer.innerHTML = "";
+    for (let i = 0; i < Object.keys(reviewList[index]).length; i++) {
         let review = document.createElement("div");
         review.classList.add("review");
-        sidebar.children[2].appendChild(review);
+        review.classList.add(`_${index}`);
+        review.classList.add(`__${i}`);
+        reviewContainer.appendChild(review);
 
         let reviewer = reviewList[index][i];
         let like = "";
-        if (reviewer.liked == "true")
-            like = "Life_Crystal_Full.webp";
-        else
+        if (likes != undefined) {
+            if (likes[i] != true)
+                like = "Life_Crystal_Full.webp";
+            else
+                like = "Life_Crystal_Empty.webp";
+        }
+        else{
             like = "Life_Crystal_Empty.webp";
+        }
 
         review.innerHTML = `<img class="user_icon" src="img/${reviewer.imgSrc}">
         <p class="user_name">${reviewer.name}</p>
         <p class="user_review_score"><b class="object_percent_review">${reviewer.rating}</b><b>%</b></p>
         <p class="user_review">${reviewer.comment}</p>
-        <img src="img/${like}" class="heart">`;
+        <img src="img/${like}" class="heart _${index} __${i}">`;
     }
 
     //skoro stejny jako totalHappiness(), nechce se mi to menit pro premene jen abych to nemusel 1 zkopirovat
@@ -481,7 +575,29 @@ function openReviews() {
                 break;
         }
     }
+
+    // pridat meneni like
+    for (let heart of document.querySelectorAll(".heart"))
+        heart.addEventListener("click", changeLike);
 }
+
+function changeLike() {
+    let likes = JSON.parse(window.localStorage.getItem("likes"));
+
+    if (this.src.includes("Life_Crystal_Empty.webp")) {
+        this.src = "img/Life_Crystal_Full.webp"; 
+
+        likes[this.classList[1].slice(1)][this.classList[2].slice(2)] = true;
+        window.localStorage.setItem("likes", JSON.stringify(likes));
+    }
+    else {
+        this.src = "img/Life_Crystal_Empty.webp";
+
+        likes[this.classList[1].slice(1)][this.classList[2].slice(2)] = false;
+        window.localStorage.setItem("likes", JSON.stringify(likes));
+    }
+}
+
 // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 

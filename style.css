@@ -117,15 +117,15 @@ button {
 
 aside {
     position: fixed;
-    right: 0vw;
+    right: 0;
     top: 0;
-    width: 25vw;
+    width: 35vw;
     height: 100vh;
     background-color: white;
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     visibility: visible;
     overflow-y: scroll;
-    margin-bottom: 10vh;
 }
 
 .hidden {
@@ -147,11 +147,14 @@ aside {
     grid-template-columns: 15% 60% 15%;
     grid-template-rows: 50% 50%;
     gap: 5%;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .user_review {
     grid-column: 1/3;
+    /* margin-top: 0; */
+    overflow-y: scroll;
 }
 
 .heart {
@@ -164,7 +167,3 @@ aside {
     border: 1px solid #28a1e1;
     width: 100%;
 }
-
-/* .add_review{
-    display: none;
-} */
