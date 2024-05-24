@@ -334,6 +334,7 @@ function sortProductsDescending() {
 function deleteProduct() {
     document.querySelector(`.product.${this.classList[1]}`).remove();
     updateLoadMore();
+    totalHappiness();
 }
 // -------------------------------------------------------------------------------------------------
 
