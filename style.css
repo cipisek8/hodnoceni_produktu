@@ -69,20 +69,46 @@ button {
 }
 
 .stars {
+    display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
+
 }
 
-.star { 
-    width: 15%;
+.star {
+    width: 45%;
 }
 
-.star:hover~.star { 
-    content: url("img/Empty_Star.webp");
+.star_left {
+    margin-right: 0;
+    padding-right: 0;
+    border-right: 0;
 }
 
-.star:has(~.star:hover)+.star{
-    content: url("img/Full_Star.webp");
+.star_right {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
 }
+
+.star_whole{
+    display: flex;
+    flex-flow: row;
+}
+
+/* .star:hover:has(> .star_whole)~.star_whole>.star_left {
+    content: url("img/Half_Empty_Star_Left.webp");
+    
+}
+.star:hover:has(> .star_whole)~.star_whole>.star_right {
+    content: url("img/Half_Empty_Star_Right.webp");
+} */
+
+/* .star_left:has(~.star_left:hover)+.star_left {
+    content: url("img/Half_Full_Star_Left.webp");
+}
+.star_right:has(~.star_right:hover)+.star_right {
+    content: url("img/Half_Full_Star_Right.webp");
+} */
 
 .product_img {
     width: 100%;
@@ -168,11 +194,11 @@ aside {
     width: 100%;
 }
 
-#aside_background{
+#aside_background {
     background-color: darkgrey;
     opacity: 50%;
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
