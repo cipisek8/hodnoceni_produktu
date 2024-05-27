@@ -7,12 +7,12 @@
 --------------- = prekopano
 /-/-/-/-/-/-/-/ = prekopu jinak/jindy
 
-celkove hodnoceni
+celkove hodnoceni ----------------------------------------------------------------------------------
 {
     aktualizace pri zmene hodnoceni ----------------------------------------------------------------
     zmena obrazku pri specifickych procentech (0-20, 21-40, 41-60, 61-80, 81-100) ------------------
     aktualizace procent ----------------------------------------------------------------------------
-    casti hvezd ****
+    casti hvezd ------------------------------------------------------------------------------------
 }
 
 zaridici tlacitka ----------------------------------------------------------------------------------
@@ -400,7 +400,7 @@ function changeStarClick() {
             stars[i].src = "img/Half_Empty_Star_Right.webp";
     }
 
-    for (let i = 0; i < parseInt(this.classList[2].slice(2))+1; i++) {
+    for (let i = 0; i < parseInt(this.classList[2].slice(2)) + 1; i++) {
         if (stars[i].classList[3] == "star_left")
             stars[i].src = "img/Half_Full_Star_Left.webp";
         else if (stars[i].classList[3] == "star_right")
@@ -469,10 +469,10 @@ function deleteReview() {
     window.localStorage.setItem("myProductRatings", percents.join(','));
 
     let starsLeft = document.querySelectorAll(`.star_left.${this.classList[1]}`);
-                let starsRight = document.querySelectorAll(`.star_right.${this.classList[1]}`);
-    for (let i = 0; i < starsLeft.length; i++){
-starsLeft[i].src = "img/Half_Full_Star_Left.webp";
-starsRight[i].src = "img/Half_Full_Star_Right.webp";
+    let starsRight = document.querySelectorAll(`.star_right.${this.classList[1]}`);
+    for (let i = 0; i < starsLeft.length; i++) {
+        starsLeft[i].src = "img/Half_Full_Star_Left.webp";
+        starsRight[i].src = "img/Half_Full_Star_Right.webp";
     }
     document.querySelector(`.object_percent.${this.classList[1]}`).innerText = 100;
 
@@ -842,29 +842,29 @@ function openReviews() {
                 for (let star of starsLeft) {
                     star.src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Zenith.webp";
                 break;
-    
+
             case 9:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 4; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Zenith.webp";
                 break;
-    
+
             case 8:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -872,17 +872,17 @@ function openReviews() {
                 for (let i = 0; i < 4; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 4; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Terra_Blade.webp";
                 break;
-    
+
             case 7:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -890,17 +890,17 @@ function openReviews() {
                 for (let i = 0; i < 4; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 3; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Terra_Blade.webp";
                 break;
-    
+
             case 6:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -908,17 +908,17 @@ function openReviews() {
                 for (let i = 0; i < 3; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 3; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/True_Excalibur.webp";
                 break;
-    
+
             case 5:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -926,17 +926,17 @@ function openReviews() {
                 for (let i = 0; i < 3; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 2; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/True_Excalibur.webp";
                 break;
-    
+
             case 4:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -944,17 +944,17 @@ function openReviews() {
                 for (let i = 0; i < 2; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 2; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Night's_Edge.webp";
                 break;
-    
+
             case 3:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -962,17 +962,17 @@ function openReviews() {
                 for (let i = 0; i < 2; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 1; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Night's_Edge.webp";
                 break;
-    
+
             case 2:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -980,17 +980,17 @@ function openReviews() {
                 for (let i = 0; i < 1; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 1; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Copper_Shortsword.webp";
                 break;
-    
+
             case 1:
                 for (let star of starsLeft) {
                     star.src = "img/Half_Empty_Star_Left.webp";
@@ -998,14 +998,14 @@ function openReviews() {
                 for (let i = 0; i < 1; i++) {
                     starsLeft[i].src = "img/Half_Full_Star_Left.webp";
                 }
-    
+
                 for (let star of starsRight) {
                     star.src = "img/Half_Empty_Star_Right.webp";
                 }
                 for (let i = 0; i < 0; i++) {
                     starsRight[i].src = "img/Half_Full_Star_Right.webp";
                 }
-    
+
                 ratingImg.src = "img/Copper_Shortsword.webp";
                 break;
         }
