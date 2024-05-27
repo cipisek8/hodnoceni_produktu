@@ -149,7 +149,7 @@ testing
 
 let defaultLikes = {
     0: {
-        0: true
+        0: true,
         1: false,
         2: true,
         3: true,
