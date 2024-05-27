@@ -60,7 +60,6 @@ plan aside ---------------------------------------------------------------------
     ukladani like do local storage -----------------------------------------------------------------
 }
 
-
 reforma --------------------------------------------------------------------------------------------
 {
     zmenit cely kod aby pouzival localstorage ------------------------------------------------------
@@ -331,8 +330,21 @@ function sortProductsDescending() {
 }
 // -------------------------------------------------------------------------------------------------
 
-function deleteProduct() {
-    document.querySelector(`.product.${this.classList[1]}`).remove();
+function deleteReview() {
+    let myReviews = JSON.parse(window.localStorage.getItem("myReviews"));
+    myReviews[parseInt(this.classList[1].slice(1))] = undefined;
+    window.localStorage.setItem("myReviews", JSON.stringify(myReviews));
+
+
+    percents = window.localStorage.getItem("myProductRatings").split(',');
+    percents[this.classList[1].slice(1)] = 100;
+    window.localStorage.setItem("myProductRatings", percents.join(','));
+
+    let stars = document.querySelectorAll(`.star.${this.classList[1]}`);
+    for (let i = 0; i < stars.length; i++)
+        stars[i].src = "img/Full_Star.webp";
+    document.querySelector(`.object_percent.${this.classList[1]}`).innerText = 100;
+
     updateLoadMore();
     totalHappiness();
 }
@@ -385,7 +397,7 @@ function addProduct(index) {
                 <button class="open_reviews _${index}">Zobrazit recenze</button>`;
 
                 document.querySelector(`.add_review_button._${index}`).addEventListener("click", addReview);
-                document.querySelector(`.delete_item._${index}`).addEventListener("click", deleteProduct);
+                document.querySelector(`.delete_item._${index}`).addEventListener("click", deleteReview);
                 document.querySelector(`.open_reviews._${index}`).addEventListener("click", openReviews);
             }
 
@@ -623,7 +635,7 @@ function openReviews() {
     for (let heart of document.querySelectorAll(".heart"))
         heart.addEventListener("click", changeLike);
 }
-// /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+// -------------------------------------------------------------------------------------------------
 
 function closeReviews() {
     document.querySelector("aside").classList.toggle("hidden", true);
