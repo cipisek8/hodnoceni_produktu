@@ -197,8 +197,8 @@ function totalHappiness() {
 
     document.getElementById("total_percent").innerText = average;
 
-    let starsLeft = document.querySelectorAll("#product_happiness .star_left");
-    let starsRight = document.querySelectorAll("#product_happiness .star_right");
+    let starsLeft = document.querySelectorAll("#product_happiness .star_left_nochange");
+    let starsRight = document.querySelectorAll("#product_happiness .star_right_nochange");
     let ratingImg = document.querySelector("#product_happiness .rating_img");
 
     switch (Math.ceil(average / 10)) {
@@ -468,9 +468,12 @@ function deleteReview() {
     percents[this.classList[1].slice(1)] = 100;
     window.localStorage.setItem("myProductRatings", percents.join(','));
 
-    let stars = document.querySelectorAll(`.star.${this.classList[1]}`);
-    for (let i = 0; i < stars.length; i++)
-        stars[i].src = "img/Full_Star.webp";
+    let starsLeft = document.querySelectorAll(`.star_left.${this.classList[1]}`);
+                let starsRight = document.querySelectorAll(`.star_right.${this.classList[1]}`);
+    for (let i = 0; i < starsLeft.length; i++){
+starsLeft[i].src = "img/Half_Full_Star_Left.webp";
+starsRight[i].src = "img/Half_Full_Star_Right.webp";
+    }
     document.querySelector(`.object_percent.${this.classList[1]}`).innerText = 100;
 
     updateLoadMore();
@@ -830,8 +833,8 @@ function openReviews() {
             average = 100;
         document.getElementById("product_total_percent").innerText = average;
 
-        let starsLeft = document.querySelectorAll("#product_info_reviews .star_left");
-        let starsRight = document.querySelectorAll("#product_info_reviews .star_right");
+        let starsLeft = document.querySelectorAll("#product_info_reviews .star_left_nochange");
+        let starsRight = document.querySelectorAll("#product_info_reviews .star_right_nochange");
         let ratingImg = document.querySelector("#product_info_reviews .rating_img");
 
         switch (Math.ceil(average / 10)) {

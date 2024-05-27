@@ -90,25 +90,32 @@ button {
     border-left: 0;
 }
 
-.star_whole{
+.star_whole {
     display: flex;
     flex-flow: row;
 }
 
-/* .star:hover:has(> .star_whole)~.star_whole>.star_left {
+.star_whole:has(.star:hover)~.star_whole .star_left {
     content: url("img/Half_Empty_Star_Left.webp");
-    
 }
-.star:hover:has(> .star_whole)~.star_whole>.star_right {
-    content: url("img/Half_Empty_Star_Right.webp");
-} */
 
-/* .star_left:has(~.star_left:hover)+.star_left {
+.star_whole:has(.star:hover)~.star_whole .star_right {
+    content: url("img/Half_Empty_Star_Right.webp");
+}
+
+.star_whole:has(.star_left:hover) .star_right {
+    content: url("img/Half_Empty_Star_Right.webp");
+}
+
+/* ///////////////////////// problem zone /////////////////////////// */
+.star_whole:has(~.star_whole:has(.star:hover))>.star_left {
     content: url("img/Half_Full_Star_Left.webp");
 }
-.star_right:has(~.star_right:hover)+.star_right {
+
+.star_whole:has(~.star_right:hover)>.star_right+.star_right {
     content: url("img/Half_Full_Star_Right.webp");
-} */
+}
+/* ////////////////////////////////////////////////////////////////// */
 
 .product_img {
     width: 100%;
