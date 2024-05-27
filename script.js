@@ -187,11 +187,6 @@ addProducts();
 updateLoadMore();
 totalHappiness();
 
-function getRating(index) {
-    return window.localStorage.getItem("myProductRatings").split(',')[index];
-}
-// -------------------------------------------------------------------------------------------------
-
 function totalHappiness() {
     let percents = document.querySelectorAll(".object_percent");
     let total = 0;
@@ -406,7 +401,7 @@ function addProduct(index) {
             productReview.append(starsProduct);
 
             {
-                let rating = getRating(index);
+                let rating = window.localStorage.getItem("myProductRatings").split(',')[index];
                 if (rating == null)
                     rating = 100;
                 starsProduct.innerHTML = `<div class="stars _${index}">
