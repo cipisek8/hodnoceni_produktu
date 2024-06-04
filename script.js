@@ -77,8 +77,6 @@ reforma /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-
     sort ze vsech produktu, ne jen nactenych
     cas pridani hodnoceni
         aktualni cas u mych hodnoceni
-    localStorage.getItem dat do promene
-    
 }
 
 */
