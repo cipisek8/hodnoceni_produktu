@@ -10,7 +10,7 @@
 
 <body>
     <main> <!-- moje hodnoceni -->
-        <section id="total_happiness"> <!-- celkove hodnoceni, odeslat hodnoeni -->
+        <div id="total_happiness"> <!-- celkove hodnoceni, odeslat hodnoeni -->
             <div> <!-- text -->
                 <h1>Hodnocení zakoupených produktů</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -43,23 +43,23 @@
                 </div>
                 <p>Moje celková spokojenost: <b id="total_percent">20</b><b>%</b></p>
             </div>
-        </section>
+        </div>
 
-        <section id="sort_buttons"> <!-- tlacitka seradit -->
+        <div id="sort_buttons"> <!-- tlacitka seradit -->
             <p>Seřadit:</p>
             <button id="sort_ascending" onclick="sortProductsAscending()">Od nejlépe hodnocených</button>
             <button id="sort_descending" onclick="sortProductsDescending()">Od nejhůře hodnocených</button>
-        </section>
+        </div>
 
-        <section id="product_container"> <!-- container na produkty -->
-        </section>
+        <div id="product_container"> <!-- container na produkty -->
+        </div>
 
         <button id="load_more">Načíst další</button> <!-- tlacitko nacist dalsi -->
     </main>
 
     <aside class="hidden">
         <h1>Hodnocení uživatelů</h1> <!-- hodnoceni uzitavelu -->
-        <section id="product_info_reviews"> <!-- produkt -->
+        <div id="product_info_reviews"> <!-- produkt -->
             <img src="img/Zenith.webp" class="rating_img">
             <div class="stars">
                 <div class="star_whole">
@@ -84,9 +84,9 @@
                 </div>
             </div>
             <p><b id="product_total_percent">100</b><b>%</b></p>
-        </section>
+        </div>
 
-        <section id="review_container"> <!-- recenze (mnozne) -->
+        <div id="review_container"> <!-- recenze (mnozne) -->
 
             <!-- review format
     <div class="review">
@@ -98,7 +98,7 @@
     </div>
 -->
 
-        </section>
+        </div>
     </aside>
     <div class="hidden" id="aside_background" onclick="closeReviews()"></div>
 </body>

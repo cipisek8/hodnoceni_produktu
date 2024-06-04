@@ -60,7 +60,7 @@ plan aside ---------------------------------------------------------------------
     ukladani like do local storage -----------------------------------------------------------------
 }
 
-reforma --------------------------------------------------------------------------------------------
+reforma /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-
 {
     zmenit cely kod aby pouzival localstorage ------------------------------------------------------
         ukladat jako array/json --------------------------------------------------------------------
@@ -73,6 +73,12 @@ reforma ------------------------------------------------------------------------
     hover - pres css - ~ - vsechny za tim ----------------------------------------------------------
     opravit addProducts/addProduct -----------------------------------------------------------------
     aktualizace viditelneho ratingu produktu po smazani --------------------------------------------
+
+    sort ze vsech produktu, ne jen nactenych
+    cas pridani hodnoceni
+        aktualni cas u mych hodnoceni
+    localStorage.getItem dat do promene
+    
 }
 
 */
@@ -144,44 +150,6 @@ if (window.localStorage.getItem("likes") == null)
 if (window.localStorage.getItem("myReviews") == null)
     window.localStorage.setItem("myReviews", "{}");
 
-/*
-testing
-
-let defaultLikes = {
-    0: {
-        0: true,
-        1: false,
-        2: true,
-        3: true,
-        4: false,
-        5: true,
-        6: false,
-        7: false,
-        8: false,
-        9: false
-    },
-    1: {
-        0: false
-    },
-    2: {
-        0: true
-    },
-    3: {
-        0: false,
-        1: true
-    },
-    4: {
-        0: true
-    },
-    5: {
-        0: false
-    },
-    6: {
-        0: true
-    }
-}
-window.localStorage.setItem("likes", JSON.stringify(defaultLikes));
-*/
 
 addProducts();
 updateLoadMore();
@@ -1044,11 +1012,3 @@ function changeLike() {
     }
 }
 // -------------------------------------------------------------------------------------------------
-
-//////////////////////////////////////////////////////////////////////////////////////////////////// pro spolupraci autocomplete/copy paste garage
-/*
-document.querySelector().classList.
-    parseInt()
-"ssseeefggg".includes
-*/
-////////////////////////////////////////////////////////////////////////////////////////////////////
