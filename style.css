@@ -207,6 +207,7 @@ aside {
 
 .heart {
     place-self: end;
+    flex-shrink: 0;
 }
 
 .user_icon {
@@ -225,4 +226,19 @@ aside {
     width: 100vw;
     height: 100vh;
     z-index: 99;
+}
+
+.heart_date{
+    display: flex;
+    flex-direction:column;
+}
+
+.date {
+    flex-grow: 1;
+    margin: 0;
+}
+
+img{
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }

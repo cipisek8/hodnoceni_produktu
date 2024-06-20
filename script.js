@@ -74,9 +74,8 @@ reforma /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-
     opravit addProducts/addProduct -----------------------------------------------------------------
     aktualizace viditelneho ratingu produktu po smazani --------------------------------------------
 
-    sort ze vsech produktu, ne jen nactenych
-    cas pridani hodnoceni
-        aktualni cas u mych hodnoceni
+    cas pridani hodnoceni --------------------------------------------------------------------------
+        aktualni cas u mych hodnoceni --------------------------------------------------------------
 }
 
 */
@@ -102,43 +101,45 @@ if ((window.localStorage.getItem("myProductRatings") == null) || (window.localSt
 
 const reviewList = {
     0: {
-        0: { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!" },
-        1: { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???" },
-        2: { imgSrc: "Map_Icon_Golem.webp", name: "Golem", rating: 80, comment: "Helps a lot with building the temple." },
+        0: { imgSrc: "Map_Icon_Moon_Lord.webp", name: "Moon Lord", rating: 100, comment: "Best dirt moving tool ever!", date: new Date('06-28-2015') },
+        1: { imgSrc: "Map_Icon_Eye_of_Cthulhu.webp", name: "Eye of Cthulhu", rating: 20, comment: "Nejhorší věc, co jsem kdy viděl. Co na tom ostatní vidí???", date: new Date('05-16-2011') },
+        2: { imgSrc: "Map_Icon_Golem.webp", name: "Golem", rating: 80, comment: "Helps a lot with building the temple.", date: new Date('09-30-2013') },
         3: {
             imgSrc: "Map_Icon_King_Slime.webp", name: "King Slime", rating: 20, comment: `All around me are familiar faces
         Worn out places, worn out faces
         Bright and early for the daily races
-        Going nowhere, going nowhere`},
-        4: { imgSrc: "Map_Icon_Brain_of_Cthulhu.webp", name: "Brain of Cthulhu", rating: 60, comment: "Not my best drop." },
-        5: { imgSrc: "Map_Icon_Mechanic.webp", name: "Mechanic", rating: 100, comment: "An essential tool for everyday use." },
-        6: { imgSrc: "Map_Icon_Plantera_(first_form).webp", name: "Plantera", rating: 60, comment: "What even is this supposed to be?" },
-        7: { imgSrc: "Map_Icon_Plantera_(second_form).webp", name: "Ragetera", rating: 20, comment: "fuck fuck fuck fuck fuck fuck fuck" },
-        8: { imgSrc: "Map_Icon_Empress_of_Light.webp", name: "Empress of Light", rating: 20, comment: "a tool for weapklings" },
-        9: { imgSrc: "Map_Icon_Wall_of_Flesh.webp", name: "Wall of Flesh", rating: 20, comment: "cant use it, too much fire around" }
+        Going nowhere, going nowhere`, date: new Date('06-10-2011')
+        },
+        4: { imgSrc: "Map_Icon_Brain_of_Cthulhu.webp", name: "Brain of Cthulhu", rating: 60, comment: "Not my best drop.", date: new Date('09-30-2013') },
+        5: { imgSrc: "Map_Icon_Mechanic.webp", name: "Mechanic", rating: 100, comment: "An essential tool for everyday use.", date: new Date('12-01-2011') },
+        6: { imgSrc: "Map_Icon_Plantera_(first_form).webp", name: "Plantera", rating: 60, comment: "What even is this supposed to be?", date: new Date('09-30-2013') },
+        7: { imgSrc: "Map_Icon_Plantera_(second_form).webp", name: "Ragetera", rating: 20, comment: "fuck fuck fuck fuck fuck fuck fuck", date: new Date('09-31-2013') },
+        8: { imgSrc: "Map_Icon_Empress_of_Light.webp", name: "Empress of Light", rating: 20, comment: "a tool for weapklings", date: new Date('05-16-2020') },
+        9: { imgSrc: "Map_Icon_Wall_of_Flesh.webp", name: "Wall of Flesh", rating: 20, comment: "cant use it, too much fire around", date: new Date('12-01-2011') }
     },
     1: {
-        0: { imgSrc: "Map_Icon_Wall_of_Flesh.webp", name: "Wall of Flesh", rating: 20, comment: "cant use it, too much fire around" }
+        0: { imgSrc: "Map_Icon_Wall_of_Flesh.webp", name: "Wall of Flesh", rating: 20, comment: "cant use it, too much fire around", date: new Date('12-01-2011') }
     },
     2: {
-        0: { imgSrc: "Map_Icon_Empress_of_Light.webp", name: "Empress of Light", rating: 20, comment: "a tool for weaklings" }
+        0: { imgSrc: "Map_Icon_Empress_of_Light.webp", name: "Empress of Light", rating: 20, comment: "a tool for weaklings", date: new Date('05-16-2020') }
     },
     3: {
-        0: { imgSrc: "Map_Icon_Plantera_(first_form).webp", name: "Plantera", rating: 60, comment: "What even is this supposed to be?" },
-        1: { imgSrc: "Map_Icon_Plantera_(second_form).webp", name: "Ragetera", rating: 20, comment: "fuck fuck fuck fuck fuck fuck fuck" }
+        0: { imgSrc: "Map_Icon_Plantera_(first_form).webp", name: "Plantera", rating: 60, comment: "What even is this supposed to be?", date: new Date('09-30-2013') },
+        1: { imgSrc: "Map_Icon_Plantera_(second_form).webp", name: "Ragetera", rating: 20, comment: "fuck fuck fuck fuck fuck fuck fuck", date: new Date('09-31-2013') }
     },
     4: {
-        0: { imgSrc: "Map_Icon_Mechanic.webp", name: "Mechanic", rating: 100, comment: "An essential tool for everyday use." }
+        0: { imgSrc: "Map_Icon_Mechanic.webp", name: "Mechanic", rating: 100, comment: "An essential tool for everyday use.", date: new Date('12-01-2011') }
     },
     5: {
-        0: { imgSrc: "Map_Icon_Brain_of_Cthulhu.webp", name: "Brain of Cthulhu", rating: 60, comment: "Not my best drop." }
+        0: { imgSrc: "Map_Icon_Brain_of_Cthulhu.webp", name: "Brain of Cthulhu", rating: 60, comment: "Not my best drop.", date: new Date('09-30-2013') }
     },
     6: {
         0: {
             imgSrc: "Map_Icon_King_Slime.webp", name: "King Slime", rating: 20, comment: `All around me are familiar faces
         Worn out places, worn out faces
         Bright and early for the daily races
-        Going nowhere, going nowhere`}
+        Going nowhere, going nowhere`, date: new Date('06-10-2011')
+        }
     }
 }
 
@@ -458,7 +459,12 @@ function submitReview() {
     window.localStorage.setItem("myProductRatings", loadedRatings.join(','));
 
     let myReviews = JSON.parse(window.localStorage.getItem("myReviews"));
-    myReviews[parseInt(this.classList[1].slice(1))] = document.querySelector(`.write_review.${this.classList[1]}`).value;
+
+    if (myReviews[parseInt(this.classList[1].slice(1))] == null)
+        myReviews[parseInt(this.classList[1].slice(1))] = {};
+
+    myReviews[parseInt(this.classList[1].slice(1))].text = document.querySelector(`.write_review.${this.classList[1]}`).value;
+    myReviews[parseInt(this.classList[1].slice(1))].date = new Date().getTime();
     window.localStorage.setItem("myReviews", JSON.stringify(myReviews));
 
     document.querySelector(`.add_review.${this.classList[1]}`).classList.toggle("hidden", true);
@@ -755,10 +761,14 @@ function openReviews() {
         review.classList.add(`_${index}`);
         reviewContainer.appendChild(review);
 
+        let writtenReview = JSON.parse(window.localStorage.getItem("myReviews"))[index];
+        let date = new Date(parseInt(writtenReview.date));
+
         review.innerHTML = `<img class="user_icon" src="img/Terrarian.webp">
         <p class="user_name">Terrarian</p>
         <p class="user_review_score"><b class="object_percent_review">${window.localStorage.getItem("myProductRatings").split(',')[index]}</b><b>%</b></p>
-        <p class="user_review">${JSON.parse(window.localStorage.getItem("myReviews"))[index]}</p>`;
+        <p class="user_review">${writtenReview.text}</p>
+        <p class="date"><b>${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}</b></p>`;
     }
 
     for (let i = 0; i < Object.keys(reviewList[index]).length; i++) {
@@ -784,7 +794,10 @@ function openReviews() {
         <p class="user_name">${reviewer.name}</p>
         <p class="user_review_score"><b class="object_percent_review">${reviewer.rating}</b><b>%</b></p>
         <p class="user_review">${reviewer.comment}</p>
-        <img src="img/${like}" class="heart _${index} __${i}">`;
+        <div>
+        <p class="date"><b>${reviewer.date.getDate()}. ${reviewer.date.getMonth() + 1}. ${reviewer.date.getFullYear()}</b></p>
+        <img src="img/${like}" class="heart _${index} __${i}">
+        </div>`;
     }
 
     //skoro stejny jako totalHappiness(), nechce se mi to menit pro premene jen abych to nemusel 1 zkopirovat
